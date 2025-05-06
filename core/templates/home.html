@@ -1,0 +1,28 @@
+<section class="post-cards">
+    <div class="container">
+        <h2 class="text-center" data-aos="fade-up" data-editable="text" data-field="blog_section_title" data-original-content="Son Haberler">Son Haberler</h2>
+        <p class="text-center section-description" data-aos="fade-up" data-aos-delay="100" data-editable="text" data-field="blog_section_description" data-original-content="En son haberler, güncellemeler ve blog yazılarımız">
+            En son haberler, güncellemeler ve blog yazılarımız
+        </p>
+        <div class="row g-4">
+            {% for post in blog_posts %}
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter }}00">
+                <div class="post-card">
+                    <div class="post-image">
+                        <img src="{{ post.image.url }}" alt="{{ post.title }}">
+                    </div>
+                    <div class="post-content">
+                        <h3>{{ post.title }}</h3>
+                        <p>{{ post.content|truncatewords:20 }}</p>
+                        <a href="/blog/{{ post.id }}/" class="read-more">Devamını Oku</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p>Henüz blog yazısı eklenmemiş.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section> 

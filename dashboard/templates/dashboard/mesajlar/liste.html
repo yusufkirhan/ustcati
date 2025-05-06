@@ -1,0 +1,81 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block title %}İletişim Mesajları{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="h3 mb-4 text-gray-800">İletişim Mesajları</h1>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Tüm Mesajlar</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Ad Soyad</th>
+                            <th>E-posta</th>
+                            <th>Konu</th>
+                            <th>Tarih</th>
+                            <th>Durum</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for mesaj in mesajlar %}
+                        <tr {% if not mesaj.is_read %}class="font-weight-bold"{% endif %}>
+                            <td>{{ mesaj.name }}</td>
+                            <td>{{ mesaj.email }}</td>
+                            <td>{{ mesaj.subject }}</td>
+                            <td>{{ mesaj.created_at|date:"d.m.Y H:i" }}</td>
+                            <td>
+                                {% if mesaj.status == 'pending' %}
+                                    <span class="badge badge-warning">Beklemede</span>
+                                {% elif mesaj.status == 'processed' %}
+                                    <span class="badge badge-info">İşlendi</span>
+                                {% else %}
+                                    <span class="badge badge-success">Yanıtlandı</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{% url 'dashboard:mesaj_detay' mesaj.id %}" class="btn btn-info btn-sm">
+                                    <i class="fas fa-eye"></i> Görüntüle
+                                </a>
+                                <a href="{% url 'dashboard:mesaj_sil' mesaj.id %}" class="btn btn-danger btn-sm" 
+                                   onclick="return confirm('Bu mesajı silmek istediğinizden emin misiniz?')">
+                                    <i class="fas fa-trash"></i> Sil
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        $('#dataTable').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Turkish.json"
+            },
+            "order": [[3, "desc"]]
+        });
+    });
+</script>
+{% endblock %} 

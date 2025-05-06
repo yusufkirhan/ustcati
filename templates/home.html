@@ -1,0 +1,908 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Ana Sayfa - Üst Çatı{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+    <!-- Göstergeler -->
+    <div class="carousel-indicators">
+        {% for hero in hero_sections %}
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active"{% endif %}></button>
+        {% endfor %}
+    </div>
+
+    <!-- Slider içeriği -->
+    <div class="carousel-inner">
+        {% for hero in hero_sections %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <div class="hero-section" style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{{ hero.background_image.url }}') no-repeat center center / cover;">
+                    <div class="container">
+                        <div class="hero-content">
+                            <span class="welcome-text" data-editable="text" data-field="welcome_text">{{ hero.welcome_text }}</span>
+                            <h1 class="hero-title" data-aos="fade-up" data-aos-delay="100">
+                                {{ hero.title }}
+                                <div class="text-wrapper">
+                                    <div class="words-rotate">
+                                        {% for word in hero.get_rotating_words_list %}
+                                            <span>{{ word }}</span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </h1>
+                            <p class="hero-description" data-editable="text" data-field="description">
+                                {{ hero.description }}
+                            </p>
+                            <a href="#" class="hero-button" data-aos="fade-up" data-aos-delay="300" data-bs-toggle="modal" data-bs-target="#teklifModal">
+                                {{ hero.button_text }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Kontrol butonları -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Önceki</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Sonraki</span>
+    </button>
+</div>
+
+<!-- Feature Section -->
+<section class="feature-section">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Feature Card 1 -->
+            <div class="col-lg-3 feature-card-wrapper">
+                <div class="feature-card">
+                    <div class="card-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3 data-editable="text" data-field="feature_title_1">{{ site.feature_title_1 }}</h3>
+                    <p data-editable="text" data-field="feature_desc_1">{{ site.feature_desc_1 }}</p>
+                    <a href="{{ site.feature_link_1 }}" class="card-link" data-editable="link" data-field="feature_link_1">Detaylı Bilgi <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Feature Card 2 -->
+            <div class="col-lg-3 feature-card-wrapper">
+                <div class="feature-card">
+                    <img src="{% if site.feature_image_1 %}{{ site.feature_image_1.url }}{% else %}/media/medya/feature1.jpg{% endif %}" alt="Özellik 1" class="img-fluid mb-4 rounded" data-editable="image" data-field="feature_image_1">
+                    <h3 data-editable="text" data-field="feature_title_2">{{ site.feature_title_2 }}</h3>
+                    <p data-editable="text" data-field="feature_desc_2">{{ site.feature_desc_2 }}</p>
+                    <a href="{{ site.feature_link_2 }}" class="card-link" data-editable="link" data-field="feature_link_2">Detaylı Bilgi <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Feature Card 3 -->
+            <div class="col-lg-3 feature-card-wrapper">
+                <div class="feature-card">
+                    <img src="{% if site.feature_image_2 %}{{ site.feature_image_2.url }}{% else %}/media/medya/feature2.jpg{% endif %}" alt="Özellik 2" class="img-fluid mb-4 rounded" data-editable="image" data-field="feature_image_2">
+                    <h3 data-editable="text" data-field="feature_title_3">{{ site.feature_title_3 }}</h3>
+                    <p data-editable="text" data-field="feature_desc_3">{{ site.feature_desc_3 }}</p>
+                    <a href="{{ site.feature_link_3 }}" class="card-link" data-editable="link" data-field="feature_link_3">Detaylı Bilgi <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Feature Card 4 -->
+            <div class="col-lg-3 feature-card-wrapper">
+                <div class="feature-card">
+                    <img src="{% if site.feature_image_3 %}{{ site.feature_image_3.url }}{% else %}/media/medya/feature3.jpg{% endif %}" alt="Özellik 3" class="img-fluid mb-4 rounded" data-editable="image" data-field="feature_image_3">
+                    <h3 data-editable="text" data-field="feature_title_4">{{ site.feature_title_4 }}</h3>
+                    <p data-editable="text" data-field="feature_desc_4">{{ site.feature_desc_4 }}</p>
+                    <a href="{{ site.feature_link_4 }}" class="card-link" data-editable="link" data-field="feature_link_4">Detaylı Bilgi <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Content Section -->
+<section class="content-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6" data-aos="fade-right">
+                <h2 class="section-title" data-editable="text" data-field="content_title">{{ site.content_title }}</h2>
+                <p class="section-description" data-editable="text" data-field="content_description">
+                    {{ site.content_description }}
+                </p>
+                <div class="content-details">
+                    <p class="detail-text">
+                        <i class="fas fa-check-circle text-primary me-2"></i>
+                        <span data-editable="text" data-field="detail_text_1">{{ site.detail_text_1 }}</span>
+                    </p>
+                    <p class="detail-text">
+                        <i class="fas fa-check-circle text-primary me-2"></i>
+                        <span data-editable="text" data-field="detail_text_2">{{ site.detail_text_2 }}</span>
+                    </p>
+                    <p class="detail-text">
+                        <i class="fas fa-check-circle text-primary me-2"></i>
+                        <span data-editable="text" data-field="detail_text_3">{{ site.detail_text_3 }}</span>
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-6" data-aos="fade-left">
+                <img src="{% if site.content_image %}{{ site.content_image.url }}{% else %}/media/medya/content-image.jpg{% endif %}" alt="Çatı Çözümleri" class="img-fluid rounded-3 shadow-lg" data-editable="image" data-field="content_image">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose Us Section -->
+<section class="why-choose-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6" data-aos="fade-right">
+                <div class="why-choose-content">
+                    <span class="section-subtitle" data-editable="text" data-field="why_choose_subtitle">{{ site.why_choose_subtitle }}</span>
+                    <h2 class="section-title" data-editable="text" data-field="why_choose_title">{{ site.why_choose_title }}</h2>
+                    <div class="section-text">
+                        <p data-editable="text" data-field="why_choose_description">{{ site.why_choose_description }}</p>
+                    </div>
+                    <a href="#" class="btn-discover" data-editable="link" data-field="why_choose_link">Daha Fazla</a>
+                </div>
+            </div>
+            <div class="col-lg-6" data-aos="fade-left">
+                <div class="why-choose-image">
+                    <img src="{% if site.why_choose_image %}{{ site.why_choose_image.url }}{% else %}/media/medya/why-choose.jpg{% endif %}" alt="Neden Biz?" data-editable="image" data-field="why_choose_image">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- What We Offer Section -->
+<section class="what-we-offer" style="background-image: url('{% if site.services_background %}{{ site.services_background.url }}{% else %}/media/medya/solar-panels-bg.jpg{% endif %}'); background-position: {{ site.services_background_position }};">
+    <div class="offer-overlay"></div>
+    <div class="container position-relative">
+        {% if is_admin %}
+        <div class="image-edit-icon" data-editable="image" data-field="services_background" data-background="true">
+            <i class="fas fa-camera"></i>
+        </div>
+        {% endif %}
+        <div class="overlay-content">
+            <span class="section-subtitle" data-aos="fade-up" data-editable="text" data-field="services_subtitle">{{ site.services_subtitle }}</span>
+            <h2 class="section-title" data-aos="fade-up" data-aos-delay="100" data-editable="text" data-field="services_title">{{ site.services_title }}</h2>
+            <p class="section-description" data-aos="fade-up" data-aos-delay="200" data-editable="text" data-field="services_description">
+                {{ site.services_description }}
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Image Cards Section -->
+<section class="image-cards-section">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Large Card -->
+            <div class="col-12" data-aos="fade-up">
+                <div class="image-card">
+                    <div class="card-image">
+                        <img src="{% if site.modern_roof_image %}{{ site.modern_roof_image.url }}{% else %}/media/medya/card1.jpg{% endif %}" alt="Çatı Sistemleri" data-editable="image" data-field="modern_roof_image">
+                        <div class="overlay">
+                            <div class="overlay-content">
+                                <h3 data-editable="text" data-field="modern_roof_title">{{ site.modern_roof_title }}</h3>
+                                <p data-editable="text" data-field="modern_roof_description">{{ site.modern_roof_description }}</p>
+                                <a href="{{ site.modern_roof_link }}" class="btn-explore" data-editable="link" data-field="modern_roof_link">Keşfet</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Small Cards -->
+            <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="image-card">
+                    <div class="card-image">
+                        <img src="{% if site.card2_image %}{{ site.card2_image.url }}{% else %}/media/medya/card2.jpg{% endif %}" alt="İzolasyon" data-editable="image" data-field="card2_image">
+                        <div class="overlay">
+                            <div class="overlay-content">
+                                <h3 data-editable="text" data-field="card2_title">{{ site.card2_title }}</h3>
+                                <p data-editable="text" data-field="card2_description">{{ site.card2_description }}</p>
+                                <a href="{{ site.card2_link }}" class="btn-explore" data-editable="link" data-field="card2_link">Keşfet</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="image-card">
+                    <div class="card-image">
+                        <img src="{% if site.card3_image %}{{ site.card3_image.url }}{% else %}/media/medya/card3.jpg{% endif %}" alt="Bakım" data-editable="image" data-field="card3_image">
+                        <div class="overlay">
+                            <div class="overlay-content">
+                                <h3 data-editable="text" data-field="card3_title">{{ site.card3_title }}</h3>
+                                <p data-editable="text" data-field="card3_description">{{ site.card3_description }}</p>
+                                <a href="{{ site.card3_link }}" class="btn-explore" data-editable="link" data-field="card3_link">Keşfet</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Project Solarise Section -->
+<section class="project-solarise">
+    <div class="project-bg" style="background-image: url('{% if site.project_background %}{{ site.project_background.url }}{% else %}/media/medya/solar-engineer.jpg{% endif %}'); background-position: {{ site.project_background_position }};">
+        <div class="container position-relative">
+            {% if is_admin %}
+            <div class="image-edit-icon" data-editable="image" data-field="project_background" data-background="true">
+                <i class="fas fa-camera"></i>
+            </div>
+            {% endif %}
+            <div class="project-content">
+                <span class="section-subtitle" data-aos="fade-up" data-editable="text" data-field="project_subtitle">{{ site.project_subtitle }}</span>
+                <h2 class="section-title" data-aos="fade-up" data-aos-delay="100" data-editable="text" data-field="project_title">{{ site.project_title }}</h2>
+                <p class="section-description" data-aos="fade-up" data-aos-delay="200" data-editable="text" data-field="project_description">
+                    {{ site.project_description }}
+                </p>
+                <div class="background-position-controls">
+                    <button class="btn btn-sm btn-light me-2" data-position="center center" data-field="project_background_position">Merkez</button>
+                    <button class="btn btn-sm btn-light me-2" data-position="top center" data-field="project_background_position">Üst</button>
+                    <button class="btn btn-sm btn-light me-2" data-position="bottom center" data-field="project_background_position">Alt</button>
+                    <button class="btn btn-sm btn-light me-2" data-position="center left" data-field="project_background_position">Sol</button>
+                    <button class="btn btn-sm btn-light" data-position="center right" data-field="project_background_position">Sağ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Post Cards -->
+<section class="post-cards">
+    <div class="container">
+        <h2 class="text-center" data-aos="fade-up" data-editable="text" data-field="blog_section_title" data-original-content="Son Haberler">Son Haberler</h2>
+        <p class="text-center section-description" data-aos="fade-up" data-aos-delay="100" data-editable="text" data-field="blog_section_description" data-original-content="En son haberler, güncellemeler ve blog yazılarımız">
+            En son haberler, güncellemeler ve blog yazılarımız
+        </p>
+        <div class="row g-4">
+            {% for post in blog_posts %}
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter }}00">
+                <div class="post-card">
+                    <div class="post-image">
+                        <img src="{{ post.image.url }}" alt="{{ post.title }}">
+                    </div>
+                    <div class="post-content">
+                        <h3>{{ post.title }}</h3>
+                        <p>{{ post.content|truncatewords:20 }}</p>
+                        <a href="/blog/{{ post.id }}/" class="read-more">Devamını Oku</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p>Henüz blog yazısı eklenmemiş.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="contact-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <h2 class="section-title" data-aos="fade-up" data-editable="text" data-field="contact_title">İletişime Geçin</h2>
+                <p class="section-description" data-aos="fade-up" data-aos-delay="100" data-editable="text" data-field="contact_description">
+                    Bizimle iletişime geçmek için aşağıdaki formu doldurun.
+                </p>
+                <div class="contact-info">
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span data-editable="text" data-field="contact_address">{{ site.contact_address }}</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <span data-editable="text" data-field="contact_phone">{{ site.contact_phone }}</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <span data-editable="text" data-field="contact_email">{{ site.contact_email }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <form id="contactForm" class="contact-form">
+                    {% csrf_token %}
+                    <div id="formMessages"></div>
+                    <div class="form-group">
+                        <input type="text" name="name" class="form-control" placeholder="Adınız Soyadınız" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" class="form-control" placeholder="E-posta Adresiniz" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" name="phone" class="form-control" placeholder="Telefon Numaranız" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="subject" class="form-control" placeholder="Konu" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="message" class="form-control" placeholder="Mesajınız" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Mesaj Gönder</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Medya Seçme Modal -->
+<div class="modal fade" id="mediaModal" tabindex="-1" role="dialog" aria-labelledby="mediaModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mediaModalLabel">Medya Seç</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="preview-container mb-3" style="display: none;">
+                            <img id="imagePreview" src="" alt="Önizleme" class="img-fluid rounded" style="max-height: 200px;">
+                        </div>
+                        <div class="input-group">
+                            <input type="file" class="form-control" id="mediaUpload" accept="image/*">
+                            <button class="btn btn-primary" type="button" id="uploadButton" disabled>Yükle</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="mediaGrid" role="grid" aria-label="Medya Galerisi">
+                    <!-- Medya öğeleri buraya dinamik olarak eklenecek -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Initialize AOS -->
+<script>
+    AOS.init({
+        duration: 800,
+        once: true
+    });
+</script>
+
+<style>
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.d-none {
+    display: none;
+}
+
+.save-notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    z-index: 9999;
+    animation: fadeInOut 2s ease-in-out;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translateY(20px); }
+    20% { opacity: 1; transform: translateY(0); }
+    80% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-20px); }
+}
+
+[data-editable] {
+    transition: all 0.3s ease;
+}
+
+[data-editable]:hover {
+    cursor: pointer;
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+[data-editable]:focus {
+    outline: 2px solid #007bff;
+    padding: 5px;
+    background-color: white;
+}
+
+.media-item {
+    position: relative;
+    border: 2px solid transparent;
+    transition: all 0.3s;
+    cursor: pointer;
+    margin-bottom: 15px;
+}
+
+.media-item:hover {
+    border-color: #007bff;
+    transform: scale(1.02);
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.media-item img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Erişilebilirlik için focus stilleri */
+.media-item:focus {
+    outline: 3px solid #007bff;
+    border-radius: 8px;
+}
+
+.media-item:focus-visible {
+    outline: 3px solid #007bff;
+    border-radius: 8px;
+}
+
+/* Modal erişilebilirlik stilleri */
+.modal-dialog:focus {
+    outline: none;
+}
+
+.btn-close:focus {
+    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+    outline: none;
+}
+
+.preview-container {
+    text-align: center;
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.preview-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+#uploadButton:disabled {
+    cursor: not-allowed;
+}
+
+.spinner-border {
+    margin-right: 5px;
+}
+
+/* Resim düzenleme ikonu için yeni stiller */
+.image-edit-overlay {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 50%;
+    z-index: 10;
+}
+
+.card-image:hover .image-edit-overlay {
+    opacity: 1;
+}
+
+.image-edit-icon {
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.image-edit-icon:hover {
+    transform: scale(1.1);
+}
+
+.card-image {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.overlay-content {
+    position: relative;
+    z-index: 5;
+}
+
+/* Mevcut stiller */
+.background-position-controls {
+    margin-top: 15px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    display: none;
+}
+
+.project-bg:hover .background-position-controls {
+    display: block;
+}
+
+.background-position-controls button {
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+
+.background-position-controls button:hover {
+    opacity: 1;
+}
+
+.project-solarise {
+    position: relative;
+    overflow: hidden;
+}
+
+.project-bg {
+    position: relative;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 100px 0;
+}
+
+.project-content {
+    position: relative;
+    z-index: 2;
+    color: #fff;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.project-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
+    pointer-events: none;
+}
+
+.project-bg .image-edit-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+}
+
+.project-bg .image-edit-icon i {
+    color: white;
+    font-size: 20px;
+}
+
+.project-bg .image-edit-icon:hover {
+    background: rgba(0, 0, 0, 0.7);
+    transform: scale(1.1);
+}
+
+.project-bg .background-position-controls {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.project-solarise .project-content .section-subtitle,
+.project-solarise .project-content .section-title,
+.project-solarise .project-content .section-description {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.project-solarise .project-content .section-subtitle {
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.project-solarise .project-content .section-title {
+    margin-bottom: 1.5rem;
+}
+
+.project-solarise .project-content .section-description {
+    max-width: 700px;
+    margin: 0 auto 2rem;
+}
+
+.project-solarise .project-content .background-position-controls {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.what-we-offer {
+    position: relative;
+    min-height: 500px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 100px 0;
+}
+
+.offer-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0, 123, 255, 0.8), rgba(0, 86, 179, 0.8));
+    pointer-events: none;
+}
+
+.image-edit-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+}
+
+.image-edit-icon i {
+    color: white;
+    font-size: 20px;
+}
+
+.image-edit-icon:hover {
+    background: rgba(0, 0, 0, 0.7);
+    transform: scale(1.1);
+}
+
+.overlay-content {
+    position: relative;
+    z-index: 2;
+    color: #fff;
+    text-align: center;
+}
+
+.section-subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.section-description {
+    font-size: 1.1rem;
+    max-width: 800px;
+    margin: 0 auto 2rem;
+}
+
+.background-position-controls {
+    margin-top: 15px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    display: none;
+}
+
+.what-we-offer:hover .background-position-controls {
+    display: block;
+}
+
+[data-editable="text"] {
+    cursor: text;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 3;
+}
+
+[data-editable="text"]:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-editable="text"]:focus {
+    outline: 2px solid #fff;
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    color: #fff;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.hero-content .welcome-text,
+.hero-content .hero-title,
+.hero-content .hero-description {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-content .welcome-text {
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.hero-content .hero-title {
+    margin-bottom: 1.5rem;
+}
+
+.hero-content .hero-description {
+    max-width: 700px;
+    margin: 0 auto 2rem;
+    text-align: center;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM yüklendi, düzenlenebilir alanlar aranıyor...');
+    const editableElements = document.querySelectorAll('[data-editable="text"]');
+    console.log(`${editableElements.length} adet düzenlenebilir alan bulundu`);
+    
+    editableElements.forEach(element => {
+        element.addEventListener('click', function(e) {
+            if (!element.isEditing) {
+                e.preventDefault();
+                element.isEditing = true;
+                element.contentEditable = true;
+                element.focus();
+                
+                const originalContent = element.textContent.trim();
+                console.log('Düzenleme başladı:', {
+                    field: element.dataset.field,
+                    originalContent: originalContent
+                });
+                
+                function saveChanges() {
+                    const newContent = element.textContent.trim();
+                    console.log('İçerik değişikliği:', {
+                        field: element.dataset.field,
+                        originalContent: originalContent,
+                        newContent: newContent,
+                        changed: newContent !== originalContent
+                    });
+                    
+                    if (newContent !== originalContent) {
+                        console.log('Değişiklik algılandı, kaydediliyor...');
+                        fetch('/api/save-content/', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': getCookie('csrftoken')
+                            },
+                            body: JSON.stringify({
+                                field: element.dataset.field,
+                                content: newContent
+                            })
+                        })
+                        .then(response => {
+                            console.log('Sunucu yanıtı:', {
+                                status: response.status,
+                                ok: response.ok
+                            });
+                            return response.json();
+                        })
+                        .then(data => {
+                            console.log('Sunucu yanıt detayı:', data);
+                            if (data.status === 'success') {
+                                console.log('Kayıt başarılı, sayfa yenileniyor...');
+                                location.reload();
+                            } else {
+                                console.error('Kayıt başarısız:', data.message);
+                                element.textContent = originalContent;
+                                alert('Kayıt başarısız: ' + data.message);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Kayıt hatası:', {
+                                field: element.dataset.field,
+                                error: error.message,
+                                stack: error.stack
+                            });
+                            element.textContent = originalContent;
+                            alert('Kayıt hatası: ' + error.message);
+                        })
+                        .finally(() => {
+                            console.log('İşlem tamamlandı');
+                            element.isEditing = false;
+                            element.contentEditable = false;
+                        });
+                    } else {
+                        console.log('Değişiklik yok, kaydetme işlemi atlanıyor');
+                        element.isEditing = false;
+                        element.contentEditable = false;
+                    }
+                }
+                
+                element.addEventListener('blur', saveChanges, { once: true });
+                
+                element.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        console.log('Enter tuşuna basıldı, kaydetme işlemi başlatılıyor');
+                        e.preventDefault();
+                        element.blur();
+                    }
+                });
+            }
+        });
+    });
+});
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+</script>
+
+{% endblock %} 

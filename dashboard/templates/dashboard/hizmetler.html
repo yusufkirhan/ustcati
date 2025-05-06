@@ -1,0 +1,125 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="mb-0">Hizmetlerimiz</h4>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#yeniHizmetModal">
+            <i class="fas fa-plus me-2"></i>Yeni Hizmet Ekle
+        </button>
+    </div>
+
+    <div class="row">
+        <!-- Hizmet Kartları -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="flex-shrink-0">
+                            <div class="icon-circle bg-primary text-white">
+                                <i class="fas fa-home"></i>
+                            </div>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h6 class="mb-0">Çatı Yapımı</h6>
+                            <small class="text-muted">Aktif Hizmet</small>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-link text-muted" type="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-edit me-2"></i>Düzenle</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-trash me-2"></i>Sil</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p class="text-muted small mb-0">Modern ve dayanıklı çatı yapım hizmetleri.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="flex-shrink-0">
+                            <div class="icon-circle bg-info text-white">
+                                <i class="fas fa-tools"></i>
+                            </div>
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h6 class="mb-0">Çatı Onarımı</h6>
+                            <small class="text-muted">Aktif Hizmet</small>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-link text-muted" type="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-edit me-2"></i>Düzenle</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-trash me-2"></i>Sil</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p class="text-muted small mb-0">Profesyonel çatı onarım ve bakım hizmetleri.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Yeni Hizmet Modal -->
+<div class="modal fade" id="yeniHizmetModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Yeni Hizmet Ekle</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Hizmet Adı</label>
+                        <input type="text" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Açıklama</label>
+                        <textarea class="form-control" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">İkon</label>
+                        <select class="form-select">
+                            <option value="home">Ev</option>
+                            <option value="tools">Aletler</option>
+                            <option value="hammer">Çekiç</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Durum</label>
+                        <select class="form-select">
+                            <option value="1">Aktif</option>
+                            <option value="0">Pasif</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                <button type="button" class="btn btn-primary">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.icon-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+</style>
+{% endblock %} 

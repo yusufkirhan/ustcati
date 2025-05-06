@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.title }} - Üst Çatı{% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <!-- Blog Başlığı -->
+            <h1 class="mb-4">{{ post.title }}</h1>
+            
+            <!-- Blog Görseli -->
+            {% if post.image %}
+            <img src="{{ post.image.url }}" alt="{{ post.title }}" class="img-fluid rounded mb-4">
+            {% endif %}
+            
+            <!-- Blog İçeriği -->
+            <div class="blog-content">
+                {{ post.content|safe }}
+            </div>
+            
+            <!-- Blog Tarihi -->
+            <div class="text-muted mt-4">
+                {{ post.created_at|date:"d F Y" }}
+            </div>
+            
+            <!-- Geri Dön Butonu -->
+            <div class="mt-4">
+                <a href="{% url 'core:home' %}#blog-section" class="btn btn-outline-primary">
+                    <i class="fas fa-arrow-left me-2"></i>Blog Listesine Dön
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Üst Çatı - Yönetim Paneli</title>
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-color: #cb0c9f;
+            --secondary-color: #8392AB;
+            --success-color: #82d616;
+            --info-color: #17c1e8;
+            --warning-color: #fbcf33;
+            --danger-color: #ea0606;
+            --light-color: #e9ecef;
+            --dark-color: #344767;
+        }
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #f8f9fa;
+            overflow-x: hidden;
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 250px;
+            background: white;
+            box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar.collapsed {
+            width: 70px;
+        }
+
+        .sidebar.collapsed .sidebar-logo {
+            padding: 1rem 0;
+        }
+
+        .sidebar.collapsed .sidebar-logo img {
+            max-height: 40px;
+        }
+
+        .sidebar.collapsed .nav-link span,
+        .sidebar.collapsed .nav-link p {
+            display: none;
+        }
+
+        .sidebar.collapsed .nav-link {
+            padding: 0.675rem;
+            margin: 0.25rem 0.5rem;
+            text-align: center;
+        }
+
+        .sidebar.collapsed .nav-link i {
+            margin-right: 0;
+            font-size: 1.2rem;
+        }
+
+        .sidebar-toggle {
+            position: absolute;
+            right: -15px;
+            top: 20px;
+            background: white;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+        }
+
+        .sidebar-toggle i {
+            color: var(--primary-color);
+            transition: transform 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .sidebar.collapsed .sidebar-toggle i {
+            transform: rotate(0deg);
+        }
+
+        .main-content {
+            margin-left: 250px;
+            min-height: 100vh;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar.collapsed + .main-content {
+            margin-left: 70px;
+        }
+        
+        .navbar-brand {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--dark-color);
+        }
+        
+        .nav-link {
+            color: var(--secondary-color);
+            font-weight: 500;
+            padding: 0.675rem 1rem;
+            margin: 0.25rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary-color);
+            background: rgba(203, 12, 159, 0.1);
+        }
+        
+        .nav-link i {
+            width: 1.5rem;
+        }
+        
+        .card {
+            border: 0;
+            box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
+            border-radius: 1rem;
+        }
+        
+        .card-header {
+            background: transparent;
+            padding: 1.5rem;
+            border: 0;
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        .stats-card {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stats-card .icon {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            opacity: 0.1;
+            font-size: 4rem;
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background: #a00a7e;
+            border-color: #a00a7e;
+        }
+        
+        .top-navbar {
+            background: transparent;
+            padding: 1rem 0;
+        }
+        
+        .profile-menu .dropdown-menu {
+            border: 0;
+            box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
+            border-radius: 0.5rem;
+        }
+        
+        .dropdown-item {
+            padding: 0.75rem 1.5rem;
+            color: var(--dark-color);
+            font-weight: 500;
+        }
+        
+        .dropdown-item:hover {
+            background: rgba(203, 12, 159, 0.1);
+            color: var(--primary-color);
+        }
+        
+        /* Responsive tasarım */
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .sidebar.show {
+                transform: translateX(0);
+            }
+        }
+        
+        /* Animasyonlar */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <!-- Toggle Button -->
+        <button class="sidebar-toggle" id="sidebarToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Logo -->
+        <div class="sidebar-logo py-4 text-center">
+            <a href="/panel/" class="d-block">
+                {% if site_ayarlari.site_logo %}
+                    <img src="{{ site_ayarlari.site_logo.url }}" alt="Üst Çatı Logo" style="max-height: 60px;">
+                {% else %}
+                    <img src="/static/images/logo.png" alt="Üst Çatı Logo" style="max-height: 60px;">
+                {% endif %}
+            </a>
+        </div>
+
+        <!-- Navigation -->
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link {% if request.path == '/panel/' %}active{% endif %}" href="/panel/">
+                    <i class="fas fa-home"></i>
+                    <span>Ana Sayfa</span>
+                </a>
+            </li>
+            
+            <li class="nav-item">
+                <a href="/panel/hero-section/" class="nav-link {% if 'hero-section' in request.path %}active{% endif %}">
+                    <i class="nav-icon fas fa-image"></i>
+                    <p>Hero Section</p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="/panel/medya/" class="nav-link {% if 'medya' in request.path %}active{% endif %}">
+                    <i class="nav-icon fas fa-photo-video"></i>
+                    <p>Medya Galerisi</p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="/panel/projeler/" class="nav-link {% if 'projeler' in request.path %}active{% endif %}">
+                    <i class="fas fa-project-diagram"></i>
+                    <span>Projeler</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="/panel/teklifler/" class="nav-link {% if 'teklifler' in request.path %}active{% endif %}">
+                    <i class="fas fa-envelope"></i>
+                    <span>Teklif Talepleri</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="/panel/mesajlar/" class="nav-link {% if 'mesajlar' in request.path %}active{% endif %}">
+                    <i class="fas fa-comments"></i>
+                    <span>İletişim Mesajları</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="/panel/blog/" class="nav-link {% if 'blog' in request.path %}active{% endif %}">
+                    <i class="fas fa-blog"></i>
+                    <span>Blog Yazıları</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {% if 'ayarlar' in request.path %}active{% endif %}" href="/panel/ayarlar/">
+                    <i class="fas fa-cog"></i>
+                    <span>Ayarlar</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        {% include 'dashboard/navbar.html' %}
+        
+        <div class="content fade-in">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Mobil menü toggle
+        document.querySelector('.navbar-toggler').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('show');
+        });
+
+        // Sidebar toggle
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('collapsed');
+        });
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html> 

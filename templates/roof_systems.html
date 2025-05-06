@@ -1,0 +1,700 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Çatı Sistemleri - Üst Çatı{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="services-hero" data-aos="fade-up">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="services-title" data-editable="text" data-field="roof_systems_title">{{ site.roof_systems_title|default:"Modern Çatı<br>Sistemleri" }}</h1>
+                <p class="services-subtitle" data-editable="text" data-field="roof_systems_subtitle">{{ site.roof_systems_subtitle|default:"Yenilikçi teknolojiler ve uzman ekibimizle çatınızı geleceğe hazırlıyoruz" }}</p>
+            </div>
+            <div class="col-lg-6">
+                <img src="{% if site.roof_systems_hero_image %}{{ site.roof_systems_hero_image.url }}{% else %}/media/medya/roof-systems-hero.jpg{% endif %}" alt="Çatı Sistemleri" class="img-fluid rounded-3 shadow-lg" data-editable="image" data-field="roof_systems_hero_image">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Çatı Tipleri Grid -->
+<section class="roof-types py-5">
+    <div class="container">
+        <h2 class="text-center mb-5" data-aos="fade-up" data-editable="text" data-field="roof_systems_solutions_title">{{ site.roof_systems_solutions_title|default:"Çatı Sistemleri Çözümlerimiz" }}</h2>
+        <div class="row g-4">
+            <!-- Çatı Tipi 1 -->
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="roof-card">
+                    <div class="roof-image">
+                        <img src="{% if site.roof_type1_image %}{{ site.roof_type1_image.url }}{% else %}/media/medya/kiremit-cati.jpg{% endif %}" alt="Kiremit Çatı" class="img-fluid" data-editable="image" data-field="roof_type1_image">
+                    </div>
+                    <div class="roof-content">
+                        <h3 data-editable="text" data-field="roof_type1_title">{{ site.roof_type1_title|default:"Kiremit Çatı Sistemleri" }}</h3>
+                        <p data-editable="text" data-field="roof_type1_description">{{ site.roof_type1_description|default:"Geleneksel ve modern kiremit çatı sistemleri ile binanızın estetiğini ve dayanıklılığını artırın." }}</p>
+                        <ul class="roof-features">
+                            <li><i class="fas fa-check"></i> <span data-editable="text" data-field="roof_type1_feature1">{{ site.roof_type1_feature1|default:"Uzun Ömürlü Dayanıklılık" }}</span></li>
+                            <li><i class="fas fa-check"></i> <span data-editable="text" data-field="roof_type1_feature2">{{ site.roof_type1_feature2|default:"Estetik Görünüm" }}</span></li>
+                            <li><i class="fas fa-check"></i> <span data-editable="text" data-field="roof_type1_feature3">{{ site.roof_type1_feature3|default:"Doğal Havalandırma" }}</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Çatı Tipi 2 -->
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="roof-card">
+                    <div class="roof-image">
+                        <img src="{% if site.roof_type2_image %}{{ site.roof_type2_image.url }}{% else %}/media/medya/metal-cati.jpg{% endif %}" alt="Metal Çatı" class="img-fluid" data-editable="image" data-field="roof_type2_image">
+                    </div>
+                    <div class="roof-content">
+                        <h3 data-editable="text" data-field="roof_type2_title">{{ site.roof_type2_title|default:"Metal Çatı Sistemleri" }}</h3>
+                        <p data-editable="text" data-field="roof_type2_description">{{ site.roof_type2_description|default:"Hafif, dayanıklı ve modern metal çatı sistemleri ile yapınızı güvence altına alın." }}</p>
+                        <ul class="roof-features">
+                            <li><i class="fas fa-check"></i> <span data-editable="text" data-field="roof_type2_feature1">{{ site.roof_type2_feature1|default:"Hafif Yapı" }}</span></li>
+                            <li><i class="fas fa-check"></i> <span data-editable="text" data-field="roof_type2_feature2">{{ site.roof_type2_feature2|default:"Hızlı Montaj" }}</span></li>
+                            <li><i class="fas fa-check"></i> <span data-editable="text" data-field="roof_type2_feature3">{{ site.roof_type2_feature3|default:"Minimum Bakım" }}</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Çatı Tipi 3 -->
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="roof-card">
+                    <div class="roof-image">
+                        <img src="{% if site.roof_type3_image %}{{ site.roof_type3_image.url }}{% else %}/media/medya/shingle-cati.jpg{% endif %}" alt="Shingle Çatı" class="img-fluid" data-editable="image" data-field="roof_type3_image">
+                    </div>
+                    <div class="roof-content">
+                        <h3 data-editable="text" data-field="roof_type3_title">{{ site.roof_type3_title|default:"Shingle Çatı Sistemleri" }}</h3>
+                        <p data-editable="text" data-field="roof_type3_description">{{ site.roof_type3_description|default:"Modern ve estetik shingle çatı sistemleri ile yapınıza değer katın." }}</p>
+                        <ul class="roof-features">
+                            <li><i class="fas fa-check"></i> <span data-editable="text" data-field="roof_type3_feature1">{{ site.roof_type3_feature1|default:"Çeşitli Renk Seçenekleri" }}</span></li>
+                            <li><i class="fas fa-check"></i> <span data-editable="text" data-field="roof_type3_feature2">{{ site.roof_type3_feature2|default:"Kolay Uygulama" }}</span></li>
+                            <li><i class="fas fa-check"></i> <span data-editable="text" data-field="roof_type3_feature3">{{ site.roof_type3_feature3|default:"Ekonomik Çözüm" }}</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Özellikler Section -->
+<section class="features-section py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6" data-aos="fade-right">
+                <h2 class="mb-4" data-editable="text" data-field="features_title">{{ site.features_title|default:"Neden Çatı Sistemlerimizi Tercih Etmelisiniz?" }}</h2>
+                <div class="features-list">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="feature-text">
+                            <h4 data-editable="text" data-field="feature1_title">{{ site.feature1_title|default:"Maksimum Koruma" }}</h4>
+                            <p data-editable="text" data-field="feature1_description">{{ site.feature1_description|default:"En zorlu hava koşullarına karşı tam koruma sağlayan çatı sistemleri." }}</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <div class="feature-text">
+                            <h4 data-editable="text" data-field="feature2_title">{{ site.feature2_title|default:"Enerji Verimliliği" }}</h4>
+                            <p data-editable="text" data-field="feature2_description">{{ site.feature2_description|default:"Isı yalıtımı ile enerji tasarrufu sağlayan akıllı çözümler." }}</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <div class="feature-text">
+                            <h4 data-editable="text" data-field="feature3_title">{{ site.feature3_title|default:"Profesyonel Montaj" }}</h4>
+                            <p data-editable="text" data-field="feature3_description">{{ site.feature3_description|default:"Uzman ekibimiz ile hatasız ve hızlı montaj hizmeti." }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6" data-aos="fade-left">
+                <img src="{% if site.features_image %}{{ site.features_image.url }}{% else %}/media/medya/roof-features.jpg{% endif %}" alt="Çatı Özellikleri" class="img-fluid rounded-3 shadow-lg" data-editable="image" data-field="features_image">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Process Section -->
+<section class="process-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-5" data-aos="fade-up" data-editable="text" data-field="process_title">{{ site.process_title|default:"Çatı Sistemi Kurulum Süreci" }}</h2>
+        <div class="row">
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <h4 data-editable="text" data-field="process_step1_title">{{ site.process_step1_title|default:"Keşif" }}</h4>
+                    <p data-editable="text" data-field="process_step1_description">{{ site.process_step1_description|default:"Ücretsiz keşif hizmeti ile ihtiyaçlarınızı belirleyelim." }}</p>
+                </div>
+            </div>
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <h4 data-editable="text" data-field="process_step2_title">{{ site.process_step2_title|default:"Planlama" }}</h4>
+                    <p data-editable="text" data-field="process_step2_description">{{ site.process_step2_description|default:"Size özel çatı sistemi planlaması yapalım." }}</p>
+                </div>
+            </div>
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <h4 data-editable="text" data-field="process_step3_title">{{ site.process_step3_title|default:"Uygulama" }}</h4>
+                    <p data-editable="text" data-field="process_step3_description">{{ site.process_step3_description|default:"Profesyonel ekibimiz ile montajı gerçekleştirelim." }}</p>
+                </div>
+            </div>
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="400">
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <h4 data-editable="text" data-field="process_step4_title">{{ site.process_step4_title|default:"Kontrol" }}</h4>
+                    <p data-editable="text" data-field="process_step4_description">{{ site.process_step4_description|default:"Son kontroller ile kalite güvencesi sağlayalım." }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8" data-aos="fade-right">
+                <h2 data-editable="text" data-field="cta_title">{{ site.cta_title|default:"Çatınız İçin Profesyonel Çözümler" }}</h2>
+                <p data-editable="text" data-field="cta_description">{{ site.cta_description|default:"Ücretsiz keşif ve fiyat teklifi için hemen bizimle iletişime geçin." }}</p>
+            </div>
+            <div class="col-lg-4 text-lg-end" data-aos="fade-left">
+                <a href="#" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#teklifModal">Teklif Al</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Medya Seçme Modal -->
+<div class="modal fade" id="mediaModal" tabindex="-1" role="dialog" aria-labelledby="mediaModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mediaModalLabel">Medya Seç</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="preview-container mb-3" style="display: none;">
+                            <img id="imagePreview" src="" alt="Önizleme" class="img-fluid rounded" style="max-height: 200px;">
+                        </div>
+                        <div class="input-group">
+                            <input type="file" class="form-control" id="mediaUpload" accept="image/*">
+                            <button class="btn btn-primary" type="button" id="uploadButton" disabled>Yükle</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="mediaGrid" role="grid" aria-label="Medya Galerisi">
+                    <!-- Medya öğeleri buraya dinamik olarak eklenecek -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Initialize AOS -->
+<script>
+    AOS.init({
+        duration: 800,
+        once: true
+    });
+</script>
+
+<style>
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.d-none {
+    display: none;
+}
+
+.save-notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    z-index: 9999;
+    animation: fadeInOut 2s ease-in-out;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translateY(20px); }
+    20% { opacity: 1; transform: translateY(0); }
+    80% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-20px); }
+}
+
+[data-editable] {
+    transition: all 0.3s ease;
+}
+
+[data-editable]:hover {
+    cursor: pointer;
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+[data-editable]:focus {
+    outline: 2px solid #007bff;
+    padding: 5px;
+    background-color: white;
+}
+
+.media-item {
+    position: relative;
+    border: 2px solid transparent;
+    transition: all 0.3s;
+    cursor: pointer;
+    margin-bottom: 15px;
+}
+
+.media-item:hover {
+    border-color: #007bff;
+    transform: scale(1.02);
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.media-item img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Erişilebilirlik için focus stilleri */
+.media-item:focus {
+    outline: 3px solid #007bff;
+    border-radius: 8px;
+}
+
+.media-item:focus-visible {
+    outline: 3px solid #007bff;
+    border-radius: 8px;
+}
+
+/* Modal erişilebilirlik stilleri */
+.modal-dialog:focus {
+    outline: none;
+}
+
+.btn-close:focus {
+    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+    outline: none;
+}
+
+.preview-container {
+    text-align: center;
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.preview-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+#uploadButton:disabled {
+    cursor: not-allowed;
+}
+
+.spinner-border {
+    margin-right: 5px;
+}
+
+/* Resim düzenleme ikonu için yeni stiller */
+.image-edit-overlay {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 50%;
+    z-index: 10;
+}
+
+.card-image:hover .image-edit-overlay {
+    opacity: 1;
+}
+
+.image-edit-icon {
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.image-edit-icon:hover {
+    transform: scale(1.1);
+}
+
+.card-image {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.overlay-content {
+    position: relative;
+    z-index: 5;
+}
+</style>
+
+<script>
+// Global değişkenler
+let currentField = null;
+let mediaModal = null;
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Admin kontrolü
+    const isAdmin = document.body.classList.contains('is-admin');
+    console.log('Admin durumu:', isAdmin);
+    
+    if (isAdmin) {
+        // Modal'ı başlat
+        mediaModal = new bootstrap.Modal(document.getElementById('mediaModal'));
+        
+        // Tüm düzenlenebilir alanları seç
+        const editableElements = document.querySelectorAll('[data-editable]');
+        console.log('Düzenlenebilir alan sayısı:', editableElements.length);
+        
+        editableElements.forEach(element => {
+            // Orijinal içeriği sakla
+            const originalContent = element.tagName === 'IMG' ? element.src : element.textContent;
+            element.setAttribute('data-original-content', originalContent);
+            
+            // Hover efekti
+            element.addEventListener('mouseenter', () => {
+                if (element.tagName !== 'IMG') {
+                    element.style.backgroundColor = 'rgba(255,255,255,0.1)';
+                    
+                    if (!element.querySelector('.edit-icon')) {
+                        const editIcon = document.createElement('i');
+                        editIcon.className = 'fas fa-edit edit-icon';
+                        element.appendChild(editIcon);
+                    }
+                }
+            });
+
+            element.addEventListener('mouseleave', () => {
+                if (element.tagName !== 'IMG') {
+                    element.style.backgroundColor = '';
+                    const editIcon = element.querySelector('.edit-icon');
+                    if (editIcon) editIcon.remove();
+                }
+            });
+
+            // Tıklama işlemi
+            element.addEventListener('click', (e) => {
+                const type = element.dataset.editable;
+                console.log('Tıklanan element:', { type, field: element.dataset.field });
+                
+                if (type === 'text') {
+                    e.preventDefault();
+                    element.contentEditable = true;
+                    element.focus();
+                    
+                    element.addEventListener('blur', async () => {
+                        element.contentEditable = false;
+                        const newContent = element.textContent.trim();
+                        
+                        if (newContent !== element.getAttribute('data-original-content')) {
+                            try {
+                                const result = await saveContent(element.dataset.field, newContent);
+                                if (result.status === 'success') {
+                                    element.setAttribute('data-original-content', newContent);
+                                    showNotification('Değişiklikler kaydedildi');
+                                }
+                            } catch (error) {
+                                console.error('Kayıt hatası:', error);
+                                element.textContent = element.getAttribute('data-original-content');
+                                showNotification('Kayıt sırasında bir hata oluştu', 'error');
+                            }
+                        }
+                    }, { once: true });
+                }
+                
+                if (type === 'image') {
+                    e.preventDefault();
+                    currentField = element.dataset.field;
+                    console.log('Resim alanı seçildi:', currentField);
+                    loadMedia();
+                    mediaModal.show();
+                }
+            });
+        });
+
+        // Medya yükleme işlemi
+        const mediaUpload = document.getElementById('mediaUpload');
+        const uploadButton = document.getElementById('uploadButton');
+        const previewContainer = document.querySelector('.preview-container');
+        const imagePreview = document.getElementById('imagePreview');
+
+        if (mediaUpload && uploadButton) {
+            mediaUpload.addEventListener('change', function(e) {
+                const file = this.files[0];
+                
+                if (file) {
+                    if (!file.type.startsWith('image/')) {
+                        alert('Lütfen sadece resim dosyası seçin.');
+                        this.value = '';
+                        uploadButton.disabled = true;
+                        previewContainer.style.display = 'none';
+                        return;
+                    }
+                    
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        imagePreview.src = e.target.result;
+                        previewContainer.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                    
+                    uploadButton.disabled = false;
+                } else {
+                    uploadButton.disabled = true;
+                    previewContainer.style.display = 'none';
+                }
+            });
+
+            uploadButton.addEventListener('click', async function() {
+                const file = mediaUpload.files[0];
+                
+                if (file) {
+                    try {
+                        uploadButton.disabled = true;
+                        uploadButton.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Yükleniyor...';
+                        
+                        const formData = new FormData();
+                        formData.append('image', file);
+                        formData.append('field', currentField);
+                        formData.append('kategori', 'genel');
+                        
+                        const response = await fetch('/api/upload-image/', {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRFToken': getCookie('csrftoken')
+                            },
+                            body: formData
+                        });
+                        
+                        const data = await response.json();
+                        
+                        if (data.status === 'success') {
+                            addMediaItem(data.image_url, data.image_id);
+                            mediaUpload.value = '';
+                            previewContainer.style.display = 'none';
+                            showNotification('Resim başarıyla yüklendi');
+                        } else {
+                            throw new Error(data.message || 'Yükleme başarısız');
+                        }
+                    } catch (error) {
+                        console.error('Yükleme hatası:', error);
+                        alert('Resim yüklenirken bir hata oluştu: ' + error.message);
+                    } finally {
+                        uploadButton.disabled = false;
+                        uploadButton.innerHTML = 'Yükle';
+                    }
+                }
+            });
+        }
+
+        // Medya listesini yükle
+        loadMedia();
+    }
+});
+
+// Medya listesini yükle
+async function loadMedia() {
+    try {
+        const response = await fetch('/api/get-media/');
+        if (!response.ok) throw new Error('Medya yükleme başarısız');
+        
+        const data = await response.json();
+        if (data.status === 'success' && Array.isArray(data.media)) {
+            const mediaGrid = document.getElementById('mediaGrid');
+            mediaGrid.innerHTML = '';
+            
+            data.media.forEach(item => {
+                addMediaItem(item.url, item.id);
+            });
+        }
+    } catch (error) {
+        console.error('Medya yükleme hatası:', error);
+        alert('Medya listesi yüklenirken bir hata oluştu.');
+    }
+}
+
+// Medya seçim işlemi
+async function handleMediaSelection(url) {
+    const targetImage = document.querySelector(`[data-field="${currentField}"]`);
+    if (targetImage) {
+        try {
+            // URL'yi doğru formatta gönder
+            const imageUrl = url.replace('/media/media/', '/media/');
+            
+            // Sunucuya kaydet
+            const result = await saveContent(currentField, imageUrl);
+            
+            if (result.status === 'success') {
+                // Sunucudan gelen güncel URL'yi kullan
+                const updatedUrl = result.content;
+                
+                // Resmi güncelle
+                targetImage.src = updatedUrl;
+                
+                // Başarı bildirimi göster
+                showNotification('Resim başarıyla güncellendi');
+                
+                // Modalı kapat
+                if (mediaModal) {
+                    mediaModal.hide();
+                }
+                
+                // Sayfayı yenile
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            }
+        } catch (error) {
+            console.error('Resim güncelleme hatası:', error);
+            alert('Resim kaydedilirken bir hata oluştu. Lütfen tekrar deneyin.');
+        }
+    }
+}
+
+// Medya öğesi ekle
+function addMediaItem(url, id) {
+    const mediaGrid = document.getElementById('mediaGrid');
+    const col = document.createElement('div');
+    col.className = 'col-md-4 mb-3';
+    
+    // URL'yi doğru formatta kullan
+    const imageUrl = url.replace('/media/media/', '/media/');
+    
+    col.innerHTML = `
+        <div class="media-item" data-id="${id}" role="gridcell" tabindex="0" aria-label="Medya öğesi">
+            <img src="${imageUrl}" class="img-fluid rounded" alt="Medya öğesi" style="cursor: pointer; height: 150px; object-fit: cover;">
+        </div>
+    `;
+    
+    // Medya öğesine tıklama ve klavye olayları
+    const mediaItem = col.querySelector('.media-item');
+    
+    // Tıklama olayı
+    mediaItem.addEventListener('click', async function() {
+        await handleMediaSelection(imageUrl);
+    });
+    
+    // Klavye erişilebilirliği için
+    mediaItem.addEventListener('keydown', async function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            await handleMediaSelection(imageUrl);
+        }
+    });
+    
+    mediaGrid.appendChild(col);
+}
+
+// API İşlemleri
+async function saveContent(field, content) {
+    try {
+        const response = await fetch('/api/save-content/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: JSON.stringify({
+                field: field,
+                content: content
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (!response.ok || data.status !== 'success') {
+            throw new Error(data.message || 'Kayıt başarısız');
+        }
+
+        return data;
+    } catch (error) {
+        console.error('Kayıt hatası:', error);
+        throw error;
+    }
+}
+
+// CSRF Token alma
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+// Bildirim gösterme fonksiyonu
+function showNotification(message, type = 'success') {
+    const notification = document.createElement('div');
+    notification.className = `save-notification ${type === 'error' ? 'alert-danger' : 'alert-success'}`;
+    notification.textContent = message;
+    document.body.appendChild(notification);
+
+    // 3 saniye sonra bildirimi kaldır
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
+}
+</script>
+
+{% endblock %} 

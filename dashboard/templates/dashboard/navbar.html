@@ -1,0 +1,55 @@
+{% load static %}
+<nav class="navbar top-navbar">
+    <div class="container-fluid">
+        <button class="navbar-toggler d-lg-none" type="button">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <div class="d-flex align-items-center">
+            <div class="position-relative me-3">
+                <button class="btn btn-icon-only btn-light rounded-circle" type="button">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            
+            <div class="position-relative me-3">
+                <button class="btn btn-icon-only btn-light rounded-circle position-relative" type="button">
+                    <i class="fas fa-bell"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        3
+                    </span>
+                </button>
+            </div>
+            
+            <div class="dropdown profile-menu">
+                <button class="btn btn-light d-flex align-items-center" type="button" data-bs-toggle="dropdown">
+                    {% if request.user.userprofile.profile_image %}
+                        <img src="{{ request.user.userprofile.profile_image.url }}" alt="Profile" class="rounded-circle me-2" style="width: 32px; height: 32px; object-fit: cover;">
+                    {% else %}
+                        <img src="/media/medya/undraw_profile.svg" alt="Profile" class="rounded-circle me-2" style="width: 32px; height: 32px; object-fit: cover;">
+                    {% endif %}
+                    <span class="d-none d-md-block">{{ request.user.get_full_name|default:request.user.username }}</span>
+                    <i class="fas fa-chevron-down ms-2"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                        <a class="dropdown-item" href="{% url 'dashboard:ayarlar' %}">
+                            <i class="fas fa-user me-2"></i>Profil
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{% url 'dashboard:ayarlar' %}">
+                            <i class="fas fa-cog me-2"></i>Ayarlar
+                        </a>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                        <a class="dropdown-item text-danger" href="{% url 'dashboard:logout' %}">
+                            <i class="fas fa-sign-out-alt me-2"></i>Çıkış
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav> 

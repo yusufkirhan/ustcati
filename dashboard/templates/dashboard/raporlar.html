@@ -1,0 +1,51 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+<div class="container-fluid">
+    <h4 class="mb-4">Raporlar</h4>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Rapor Listesi</h5>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Rapor Adı</th>
+                        <th>Tarih</th>
+                        <th>Durum</th>
+                        <th>İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Yıllık Rapor 2024</td>
+                        <td>01.01.2024</td>
+                        <td><span class="badge bg-success">Tamamlandı</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-info" title="Görüntüle">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn btn-sm btn-danger" title="Sil">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Aylık Rapor Şubat 2024</td>
+                        <td>01.02.2024</td>
+                        <td><span class="badge bg-warning">Devam Ediyor</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-info" title="Görüntüle">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn btn-sm btn-danger" title="Sil">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %} 

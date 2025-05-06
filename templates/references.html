@@ -1,0 +1,370 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Referanslarımız - Üst Çatı{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="services-hero" data-aos="fade-up">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="services-title" data-editable="text" data-field="references_hero_title">{{ site.references_hero_title|default:"Güvenilir<br>Referanslarımız" }}</h1>
+                <p class="services-subtitle" data-editable="text" data-field="references_hero_subtitle">{{ site.references_hero_subtitle|default:"Birlikte çalıştığımız seçkin markalar ve mutlu müşterilerimiz" }}</p>
+            </div>
+            <div class="col-lg-6">
+                <img src="{% if site.references_hero_image %}{{ site.references_hero_image.url }}{% else %}/media/medya/references-hero.jpg{% endif %}" alt="Referanslarımız" class="img-fluid rounded-3 shadow-lg" data-editable="image" data-field="references_hero_image">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Brands Section -->
+<section class="brands-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-5" data-aos="fade-up">Çözüm Ortaklarımız</h2>
+        <div class="row g-4">
+            <!-- Brand 1 -->
+            <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="100">
+                <div class="brand-card">
+                    <img src="{% if site.brand1_image %}{{ site.brand1_image.url }}{% else %}/media/medya/brand1.png{% endif %}" alt="Marka 1" class="img-fluid" data-editable="image" data-field="brand1_image">
+                </div>
+            </div>
+            <!-- Brand 2 -->
+            <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="200">
+                <div class="brand-card">
+                    <img src="{% if site.brand2_image %}{{ site.brand2_image.url }}{% else %}/media/medya/brand2.png{% endif %}" alt="Marka 2" class="img-fluid" data-editable="image" data-field="brand2_image">
+                </div>
+            </div>
+            <!-- Brand 3 -->
+            <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="300">
+                <div class="brand-card">
+                    <img src="{% if site.brand3_image %}{{ site.brand3_image.url }}{% else %}/media/medya/brand3.png{% endif %}" alt="Marka 3" class="img-fluid" data-editable="image" data-field="brand3_image">
+                </div>
+            </div>
+            <!-- Brand 4 -->
+            <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="400">
+                <div class="brand-card">
+                    <img src="{% if site.brand4_image %}{{ site.brand4_image.url }}{% else %}/media/medya/brand4.png{% endif %}" alt="Marka 4" class="img-fluid" data-editable="image" data-field="brand4_image">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Certificates Section -->
+<section class="certificates-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-5" data-aos="fade-up">Sertifikalarımız</h2>
+        <div class="row g-4">
+            <!-- Certificate 1 -->
+            <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="100">
+                <div class="certificate-card">
+                    <img src="{% if site.certificate1_image %}{{ site.certificate1_image.url }}{% else %}/media/medya/certificate1.png{% endif %}" alt="Sertifika 1" class="img-fluid" data-editable="image" data-field="certificate1_image">
+                    <h5 data-editable="text" data-field="certificate1_title">{{ site.certificate1_title|default:"ISO 9001" }}</h5>
+                    <p data-editable="text" data-field="certificate1_description">{{ site.certificate1_description|default:"Kalite Yönetim Sistemi" }}</p>
+                </div>
+            </div>
+            <!-- Certificate 2 -->
+            <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="200">
+                <div class="certificate-card">
+                    <img src="{% if site.certificate2_image %}{{ site.certificate2_image.url }}{% else %}/media/medya/certificate2.png{% endif %}" alt="Sertifika 2" class="img-fluid" data-editable="image" data-field="certificate2_image">
+                    <h5 data-editable="text" data-field="certificate2_title">{{ site.certificate2_title|default:"ISO 14001" }}</h5>
+                    <p data-editable="text" data-field="certificate2_description">{{ site.certificate2_description|default:"Çevre Yönetim Sistemi" }}</p>
+                </div>
+            </div>
+            <!-- Certificate 3 -->
+            <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="300">
+                <div class="certificate-card">
+                    <img src="{% if site.certificate3_image %}{{ site.certificate3_image.url }}{% else %}/media/medya/certificate3.png{% endif %}" alt="Sertifika 3" class="img-fluid" data-editable="image" data-field="certificate3_image">
+                    <h5 data-editable="text" data-field="certificate3_title">{{ site.certificate3_title|default:"OHSAS 18001" }}</h5>
+                    <p data-editable="text" data-field="certificate3_description">{{ site.certificate3_description|default:"İş Sağlığı ve Güvenliği" }}</p>
+                </div>
+            </div>
+            <!-- Certificate 4 -->
+            <div class="col-6 col-md-3" data-aos="fade-up" data-aos-delay="400">
+                <div class="certificate-card">
+                    <img src="{% if site.certificate4_image %}{{ site.certificate4_image.url }}{% else %}/media/medya/certificate4.png{% endif %}" alt="Sertifika 4" class="img-fluid" data-editable="image" data-field="certificate4_image">
+                    <h5 data-editable="text" data-field="certificate4_title">{{ site.certificate4_title|default:"TSE" }}</h5>
+                    <p data-editable="text" data-field="certificate4_description">{{ site.certificate4_description|default:"Türk Standartları" }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8" data-aos="fade-right">
+                <h2 data-editable="text" data-field="references_cta_title">{{ site.references_cta_title|default:"Siz de Referanslarımız Arasına Katılın" }}</h2>
+                <p data-editable="text" data-field="references_cta_description">{{ site.references_cta_description|default:"Kaliteli hizmet ve profesyonel çözümler için hemen bizimle iletişime geçin." }}</p>
+            </div>
+            <div class="col-lg-4 text-lg-end" data-aos="fade-left">
+                <a href="#" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#teklifModal">Teklif Al</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Medya Seçme Modal -->
+<div class="modal fade" id="mediaModal" tabindex="-1" role="dialog" aria-labelledby="mediaModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mediaModalLabel">Medya Seç</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="preview-container mb-3" style="display: none;">
+                            <img id="imagePreview" src="" alt="Önizleme" class="img-fluid rounded" style="max-height: 200px;">
+                        </div>
+                        <div class="input-group">
+                            <input type="file" class="form-control" id="mediaUpload" accept="image/*">
+                            <button class="btn btn-primary" type="button" id="uploadButton" disabled>Yükle</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="mediaGrid" role="grid" aria-label="Medya Galerisi">
+                    <!-- Medya öğeleri buraya dinamik olarak eklenecek -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block extra_js %}
+<script src="{% static 'js/image-editor.js' %}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    if (document.body.classList.contains('is-admin')) {
+        // Tüm düzenlenebilir metin alanlarını seç
+        const editableTextElements = document.querySelectorAll('[data-editable="text"]');
+        
+        editableTextElements.forEach(element => {
+            // Hover efekti
+            element.addEventListener('mouseenter', () => {
+                element.style.backgroundColor = 'rgba(0, 123, 255, 0.1)';
+                
+                if (!element.querySelector('.edit-icon')) {
+                    const editIcon = document.createElement('i');
+                    editIcon.className = 'fas fa-edit edit-icon';
+                    element.appendChild(editIcon);
+                }
+            });
+
+            element.addEventListener('mouseleave', () => {
+                element.style.backgroundColor = '';
+                const editIcon = element.querySelector('.edit-icon');
+                if (editIcon) editIcon.remove();
+            });
+
+            // Tıklama işlemi
+            element.addEventListener('click', (e) => {
+                e.preventDefault();
+                element.contentEditable = true;
+                element.focus();
+                
+                element.addEventListener('blur', async () => {
+                    element.contentEditable = false;
+                    const newContent = element.textContent.trim();
+                    
+                    try {
+                        const response = await fetch('/panel/save-content/', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                            },
+                            body: JSON.stringify({
+                                field: element.dataset.field,
+                                content: newContent
+                            })
+                        });
+
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+
+                        const data = await response.json();
+                        
+                        if (data.success) {
+                            showNotification('Değişiklikler kaydedildi');
+                        } else {
+                            throw new Error(data.error || 'Kayıt başarısız');
+                        }
+                    } catch (error) {
+                        console.error('Kayıt hatası:', error);
+                        showNotification('Kayıt sırasında bir hata oluştu', 'error');
+                    }
+                }, { once: true });
+            });
+        });
+    }
+});
+
+// Bildirim gösterme fonksiyonu
+function showNotification(message, type = 'success') {
+    const notification = document.createElement('div');
+    notification.className = `alert alert-${type === 'error' ? 'danger' : 'success'} position-fixed top-0 end-0 m-3`;
+    notification.style.zIndex = '9999';
+    notification.setAttribute('role', 'alert');
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
+}
+</script>
+{% endblock %}
+
+<style>
+/* Resim düzenleme stilleri */
+.image-editor-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.image-edit-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 100;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.image-editor-wrapper:hover .image-edit-button {
+    opacity: 1;
+}
+
+/* Mevcut stiller */
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.d-none {
+    display: none;
+}
+
+.save-notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    z-index: 9999;
+    animation: fadeInOut 2s ease-in-out;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translateY(20px); }
+    20% { opacity: 1; transform: translateY(0); }
+    80% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-20px); }
+}
+
+[data-editable] {
+    transition: all 0.3s ease;
+}
+
+[data-editable]:hover {
+    cursor: pointer;
+}
+
+[data-editable]:focus {
+    outline: 2px solid #007bff;
+    padding: 5px;
+    background-color: white;
+}
+
+.media-item {
+    position: relative;
+    border: 2px solid transparent;
+    transition: all 0.3s;
+    cursor: pointer;
+    margin-bottom: 15px;
+}
+
+.media-item:hover {
+    border-color: #007bff;
+    transform: scale(1.02);
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.media-item img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Erişilebilirlik için focus stilleri */
+.media-item:focus {
+    outline: 3px solid #007bff;
+    border-radius: 8px;
+}
+
+.media-item:focus-visible {
+    outline: 3px solid #007bff;
+    border-radius: 8px;
+}
+
+/* Modal erişilebilirlik stilleri */
+.modal-dialog:focus {
+    outline: none;
+}
+
+.btn-close:focus {
+    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+    outline: none;
+}
+
+.preview-container {
+    text-align: center;
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.preview-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+#uploadButton:disabled {
+    cursor: not-allowed;
+}
+
+.spinner-border {
+    margin-right: 5px;
+}
+</style>
+{% endblock %} 

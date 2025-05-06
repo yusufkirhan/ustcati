@@ -1,0 +1,91 @@
+{% load static %}
+<div class="d-flex flex-column h-100 p-3">
+    <!-- Brand -->
+    <div class="navbar-brand p-4">
+        {% if site_ayarlari.site_logo %}
+            <img src="{{ site_ayarlari.site_logo.url }}" alt="Üst Çatı Logo" height="40">
+        {% else %}
+            <img src="/static/images/logo.png" alt="Üst Çatı Logo" height="40">
+        {% endif %}
+        <span class="ms-2">Üst Çatı</span>
+    </div>
+    
+    <!-- Navigation -->
+    <ul class="nav flex-column">
+        <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}" href="{% url 'dashboard:dashboard' %}">
+                <i class="fas fa-home"></i>
+                <span>Ana Sayfa</span>
+            </a>
+        </li>
+        
+        <li class="nav-item">
+            <a href="{% url 'dashboard:hero_section_list' %}" class="nav-link {% if 'hero-section' in request.path %}active{% endif %}">
+                <i class="nav-icon fas fa-image"></i>
+                <p>Hero Section</p>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="{% url 'dashboard:medya_listesi' %}" class="nav-link {% if 'medya' in request.path %}active{% endif %}">
+                <i class="nav-icon fas fa-photo-video"></i>
+                <p>Medya Galerisi</p>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="{% url 'dashboard:proje_listesi' %}" class="nav-link {% if 'projeler' in request.path %}active{% endif %}">
+                <i class="fas fa-project-diagram"></i>
+                <span>Projeler</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="{% url 'dashboard:teklifler' %}" class="nav-link {% if 'teklifler' in request.path %}active{% endif %}">
+                <i class="fas fa-envelope"></i>
+                <span>Teklif Talepleri</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="{% url 'dashboard:mesajlar' %}" class="nav-link {% if 'mesajlar' in request.path %}active{% endif %}">
+                <i class="fas fa-comments"></i>
+                <span>İletişim Mesajları</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="{% url 'dashboard:blog_list' %}" class="nav-link {% if 'blog' in request.path %}active{% endif %}">
+                <i class="fas fa-blog"></i>
+                <span>Blog Yazıları</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link {% if 'ayarlar' in request.path %}active{% endif %}" href="{% url 'dashboard:ayarlar' %}">
+                <i class="fas fa-cog"></i>
+                <span>Ayarlar</span>
+            </a>
+        </li>
+    </ul>
+    
+    <!-- User Profile -->
+    <div class="position-absolute bottom-0 w-100 mb-4">
+        <div class="px-4">
+            <hr>
+            <div class="d-flex align-items-center">
+                <div class="flex-shrink-0">
+                    {% if user_profile.avatar %}
+                        <img src="{{ user_profile.avatar.url }}" alt="Profile" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
+                    {% else %}
+                        <img src="/media/medya/undraw_profile.svg" alt="Profile" class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
+                    {% endif %}
+                </div>
+                <div class="flex-grow-1 ms-3">
+                    <h6 class="mb-0">{{ user.username }}</h6>
+                    <small class="text-muted">Yönetici</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

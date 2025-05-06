@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ blog.title }} - {{ site.site_title }}{% endblock %}
+
+{% block content %}
+<section class="blog-detail-section py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <!-- Blog Header -->
+                <div class="blog-header mb-4">
+                    <h1 class="blog-title display-4 mb-3">{{ blog.title }}</h1>
+                    <div class="blog-meta text-muted mb-4">
+                        <span><i class="far fa-calendar-alt"></i> {{ blog.created_at|date:"d F Y" }}</span>
+                        {% if blog.category %}
+                        <span class="mx-2">|</span>
+                        <span><i class="fas fa-folder"></i> {{ blog.category }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Blog Featured Image -->
+                {% if blog.image %}
+                <div class="blog-featured-image mb-4">
+                    <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="img-fluid rounded shadow">
+                </div>
+                {% endif %}
+
+                <!-- Blog Content -->
+                <div class="blog-content">
+                    {{ blog.content|safe }}
+                </div>
+
+                <!-- Tags -->
+                {% if blog.tags %}
+                <div class="blog-tags mt-4">
+                    <h5>Etiketler:</h5>
+                    {% for tag in blog.tags.all %}
+                    <a href="#" class="badge bg-secondary text-decoration-none me-2">{{ tag.name }}</a>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <!-- Share Buttons -->
+                <div class="share-buttons mt-5">
+                    <h5>Bu Yazıyı Paylaş:</h5>
+                    <div class="d-flex gap-2 mt-2">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" 
+                           target="_blank" 
+                           class="btn btn-primary">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ blog.title }}" 
+                           target="_blank" 
+                           class="btn btn-info">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ blog.title }}" 
+                           target="_blank" 
+                           class="btn btn-secondary">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://wa.me/?text={{ blog.title }}%20{{ request.build_absolute_uri }}" 
+                           target="_blank" 
+                           class="btn btn-success">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <div class="blog-navigation mt-5 pt-4 border-top">
+                    <div class="row">
+                        <div class="col-6">
+                            {% if prev_post %}
+                            <a href="{% url 'blog_detail' prev_post.id %}" class="text-decoration-none">
+                                <div class="d-flex flex-column">
+                                    <span class="text-muted small">Önceki Yazı</span>
+                                    <span class="fw-bold">{{ prev_post.title }}</span>
+                                </div>
+                            </a>
+                            {% endif %}
+                        </div>
+                        <div class="col-6 text-end">
+                            {% if next_post %}
+                            <a href="{% url 'blog_detail' next_post.id %}" class="text-decoration-none">
+                                <div class="d-flex flex-column">
+                                    <span class="text-muted small">Sonraki Yazı</span>
+                                    <span class="fw-bold">{{ next_post.title }}</span>
+                                </div>
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %} 

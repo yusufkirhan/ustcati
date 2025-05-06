@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Üst Çatı{% endblock %}</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <!-- AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- AOS JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    {% if is_admin %}
+        <link rel="stylesheet" href="{% static 'css/image-editor.css' %}">
+        <script src="{% static 'js/image-editor.js' %}"></script>
+    {% endif %}
+</head>
+<body class="{% if is_admin %}is-admin{% endif %}">
+    <!-- Header -->
+    <header class="site-header">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <!-- Logo -->
+                <a class="navbar-brand" href="/">
+                    {% if site.site_logo %}
+                        <img src="{{ site.site_logo.url }}" alt="Üst Çatı Logo" class="img-fluid" style="max-height: 60px;">
+                    {% else %}
+                        <span class="logo-text">Üst Çatı</span>
+                    {% endif %}
+                </a>
+
+                <!-- Mobil menü butonu -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Menü öğeleri -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'core:roof_systems' %}">{{ site.menu_cati }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'core:services' %}">{{ site.menu_hizmetler|default:"Hizmetler" }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'core:projects' %}">{{ site.menu_projeler }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'core:references' %}">{{ site.menu_referanslar }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'core:contact' %}">{{ site.menu_iletisim }}</a>
+                        </li>
+                    </ul>
+                    <div class="nav-cta">
+                        <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#teklifModal">Teklif Al</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- İçerikten sonra, </main> tag'inden önce -->
+
+    <footer class="modern-footer">
+        <div class="container">
+            <div class="row">
+                <!-- Şirket Bilgileri -->
+                <div class="col-lg-5 mb-4">
+                    <h3 class="footer-title">
+                        {% if site.site_logo %}
+                            <img src="{{ site.site_logo.url }}" alt="Üst Çatı Logo" class="img-fluid mb-3" style="max-height: 50px;">
+                        {% else %}
+                            Üst Çatı
+                        {% endif %}
+                    </h3>
+                    <p class="footer-description">
+                        {% if site.footer_description %}
+                            {{ site.footer_description }}
+                        {% else %}
+                            Profesyonel ekibimiz ve kaliteli malzemelerimizle çatı sistemleriniz için en iyi çözümleri sunuyoruz. 
+                            Uzun yılların verdiği tecrübe ile hizmetinizdeyiz.
+                        {% endif %}
+                    </p>
+                    <div class="social-links">
+                        {% if site.facebook and site.facebook_aktif %}
+                            <a href="{{ site.facebook }}" class="social-link" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        {% endif %}
+                        {% if site.twitter and site.twitter_aktif %}
+                            <a href="{{ site.twitter }}" class="social-link" target="_blank"><i class="fab fa-twitter"></i></a>
+                        {% endif %}
+                        {% if site.instagram and site.instagram_aktif %}
+                            <a href="{{ site.instagram }}" class="social-link" target="_blank"><i class="fab fa-instagram"></i></a>
+                        {% endif %}
+                        {% if site.linkedin and site.linkedin_aktif %}
+                            <a href="{{ site.linkedin }}" class="social-link" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        {% endif %}
+                        {% if site.youtube and site.youtube_aktif %}
+                            <a href="{{ site.youtube }}" class="social-link" target="_blank"><i class="fab fa-youtube"></i></a>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Hızlı Linkler -->
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h3 class="footer-title">Hızlı Linkler</h3>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'core:roof_systems' %}">{{ site.menu_cati }}</a></li>
+                        <li><a href="{% url 'core:services' %}">{{ site.menu_hizmetler }}</a></li>
+                        <li><a href="{% url 'core:projects' %}">{{ site.menu_projeler }}</a></li>
+                        <li><a href="{% url 'core:references' %}">{{ site.menu_referanslar }}</a></li>
+                        <li><a href="{% url 'core:contact' %}">{{ site.menu_iletisim }}</a></li>
+                    </ul>
+                </div>
+
+                <!-- İletişim -->
+                <div class="col-lg-4 mb-4">
+                    <h3 class="footer-title">İletişim</h3>
+                    <ul class="footer-contact">
+                        {% if site.footer_adres and site.footer_adres_aktif %}
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>{{ site.footer_adres }}</span>
+                        </li>
+                        {% endif %}
+                        {% if site.footer_telefon and site.footer_telefon_aktif %}
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>{{ site.footer_telefon }}</span>
+                        </li>
+                        {% endif %}
+                        {% if site.mobile_phone and site.mobile_phone_aktif %}
+                        <li>
+                            <i class="fas fa-mobile-alt"></i>
+                            <span>{{ site.mobile_phone }}</span>
+                        </li>
+                        {% endif %}
+                        {% if site.whatsapp and site.whatsapp_aktif %}
+                        <li>
+                            <a href="https://wa.me/{{ site.whatsapp|cut:' ' }}" target="_blank" class="whatsapp-link">
+                                <i class="fab fa-whatsapp"></i>
+                                <span>{{ site.whatsapp }}</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if site.footer_email and site.footer_email_aktif %}
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>{{ site.footer_email }}</span>
+                        </li>
+                        {% endif %}
+                        <li>
+                            <i class="fas fa-clock"></i>
+                            <span>Pzt - Cmt: 09:00 - 18:00</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alt Footer -->
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        {% if site.footer_logo %}
+                            <img src="{{ site.footer_logo.url }}" alt="Üst Çatı Footer Logo" class="img-fluid" style="max-height: 40px;">
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <p class="copyright-text mb-0">
+                            {{ site.footer_copyright|default:"© 2024 Üst Çatı. Tüm hakları saklıdır." }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    {% if site.whatsapp and site.whatsapp_aktif %}
+    <a href="https://wa.me/{{ site.whatsapp|cut:' ' }}" target="_blank" class="whatsapp-float">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+    {% endif %}
+
+    <!-- Telefon Floating Button -->
+    {% if site.mobile_phone and site.mobile_phone_aktif %}
+    <a href="tel:{{ site.mobile_phone|cut:' ' }}" class="phone-float" data-bs-toggle="tooltip" data-bs-placement="left" title="{{ site.mobile_phone }}">
+        <i class="fas fa-phone"></i>
+    </a>
+    {% endif %}
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    {% block extra_js %}{% endblock %}
+    {% block extra_css %}{% endblock %}
+    
+    <script>
+        // AOS başlatma
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+
+        // Tooltip'leri aktifleştir
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        });
+
+        // CSRF token ayarı
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        // Teklif formu gönderimi
+        $(document).ready(function() {
+            const csrftoken = getCookie('csrftoken');
+
+            $.ajaxSetup({
+                beforeSend: function(xhr, settings) {
+                    if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                    }
+                }
+            });
+
+            $('#teklifForm').on('submit', function(e) {
+                e.preventDefault();
+                
+                var formData = {
+                    ad_soyad: $('input[name="ad_soyad"]').val(),
+                    telefon: $('input[name="telefon"]').val(),
+                    email: $('input[name="email"]').val(),
+                    konu: $('select[name="konu"]').val(),
+                    mesaj: $('textarea[name="mesaj"]').val()
+                };
+
+                $.ajax({
+                    url: '{% url "core:submit_teklif" %}',
+                    type: 'POST',
+                    data: JSON.stringify(formData),
+                    contentType: 'application/json',
+                    success: function(response) {
+                        if(response.status === 'success') {
+                            alert(response.message);
+                            $('#teklifModal').modal('hide');
+                            $('#teklifForm')[0].reset();
+                        } else {
+                            alert('Bir hata oluştu. Lütfen tekrar deneyin.');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Hata:', error);
+                        alert('Bir hata oluştu. Lütfen tekrar deneyin.');
+                    }
+                });
+            });
+        });
+    </script>
+
+    <!-- Modal'ı footer'dan önce ekle -->
+    <div class="modal fade" id="teklifModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <!-- Sol taraf - Bilgi metni -->
+                        <div class="col-md-5 modal-info">
+                            <h3 class="modal-title">Ücretsiz Teklif Alın</h3>
+                            <p class="modal-description">
+                                Çatı sistemleri, izolasyon ve onarım işleriniz için hemen teklif alın. 
+                                Uzman ekibimiz size en kısa sürede dönüş yapacaktır.
+                            </p>
+                            <div class="modal-contact-info">
+                                <div class="contact-item">
+                                    <i class="fas fa-phone"></i>
+                                    <span>0532 123 45 67</span>
+                                </div>
+                                <div class="contact-item">
+                                    <i class="fas fa-envelope"></i>
+                                    <span>info@ustcati.com</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Sağ taraf - Form -->
+                        <div class="col-md-7">
+                            <form id="teklifForm" class="teklif-form">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <input type="text" name="ad_soyad" class="form-control" placeholder="Adınız Soyadınız" required>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="tel" name="telefon" class="form-control" placeholder="Telefon Numaranız" required>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="email" name="email" class="form-control" placeholder="E-posta Adresiniz" required>
+                                </div>
+                                <div class="mb-3">
+                                    <select name="konu" class="form-select" required>
+                                        <option value="" selected disabled>Hizmet Seçiniz</option>
+                                        <option value="Çatı Sistemleri">Çatı Sistemleri</option>
+                                        <option value="Çatı İzolasyonu">Çatı İzolasyonu</option>
+                                        <option value="Çatı Onarımı">Çatı Onarımı</option>
+                                        <option value="Bakım Hizmeti">Bakım Hizmeti</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <textarea name="mesaj" class="form-control" rows="4" placeholder="Mesajınız" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Teklif Al</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+    .whatsapp-float {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background-color: #25d366;
+        color: white;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        text-align: center;
+        font-size: 30px;
+        box-shadow: 2px 2px 3px #999;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .whatsapp-float:hover {
+        background-color: #128c7e;
+        color: white;
+        transform: scale(1.1);
+    }
+
+    .phone-float {
+        position: fixed;
+        bottom: 30px;
+        right: 100px;
+        background-color: #007bff;
+        color: white;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        text-align: center;
+        font-size: 30px;
+        box-shadow: 2px 2px 3px #999;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .phone-float:hover {
+        background-color: #0056b3;
+        color: white;
+        transform: scale(1.1);
+    }
+    </style>
+</body>
+</html> 

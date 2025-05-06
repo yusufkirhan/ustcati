@@ -1,0 +1,366 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block title %}Ayarlar{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="h3 mb-4 text-gray-800">Ayarlar</h1>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="row">
+        <!-- Profil Ayarları -->
+        <div class="col-lg-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Profil Ayarları</h6>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data" action="{% url 'dashboard:ayarlar' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="form_type" value="profil">
+                        
+                        <div class="text-center mb-4">
+                            {% if user_profile.profile_image %}
+                                <img src="{{ user_profile.profile_image.url }}" alt="Profil Fotoğrafı" class="img-profile rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
+                            {% else %}
+                                <img src="/media/medya/undraw_profile.svg" alt="Varsayılan Profil" class="img-profile rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
+                            {% endif %}
+                            <div class="form-group">
+                                <label for="profile_image">Profil Fotoğrafı</label>
+                                {{ profile_form.profile_image }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="username">Kullanıcı Adı</label>
+                            <input type="text" class="form-control" id="username" value="{{ request.user.username }}" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-posta</label>
+                            <input type="email" class="form-control" id="email" name="email" value="{{ request.user.email }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="first_name">Ad</label>
+                            <input type="text" class="form-control" id="first_name" name="first_name" value="{{ request.user.first_name }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="last_name">Soyad</label>
+                            <input type="text" class="form-control" id="last_name" name="last_name" value="{{ request.user.last_name }}">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Profili Güncelle</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Şifre Değiştirme -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Şifre Değiştir</h6>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="{% url 'dashboard:sifre_degistir' %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="old_password">Mevcut Şifre</label>
+                            <input type="password" class="form-control" id="old_password" name="old_password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="new_password1">Yeni Şifre</label>
+                            <input type="password" class="form-control" id="new_password1" name="new_password1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="new_password2">Yeni Şifre (Tekrar)</label>
+                            <input type="password" class="form-control" id="new_password2" name="new_password2" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Şifreyi Değiştir</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Site Ayarları -->
+        <div class="col-lg-8">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Site Ayarları</h6>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data" action="{% url 'dashboard:ayarlar' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="form_type" value="site_ayarlari">
+                        
+                        <div class="row">
+                            <!-- Logo Ayarları -->
+                            <div class="col-md-6">
+                                <h5 class="mb-3">Logo Ayarları</h5>
+                                <div class="form-group">
+                                    <label>Site Logo</label>
+                                    {% if site_ayarlari.site_logo %}
+                                        <img src="{{ site_ayarlari.site_logo.url }}" alt="Site Logo" class="img-fluid mb-2" style="max-height: 100px;">
+                                    {% endif %}
+                                    {{ site_form.site_logo }}
+                                </div>
+                                <div class="form-group">
+                                    <label>Footer Logo</label>
+                                    {% if site_ayarlari.footer_logo %}
+                                        <img src="{{ site_ayarlari.footer_logo.url }}" alt="Footer Logo" class="img-fluid mb-2" style="max-height: 100px;">
+                                    {% endif %}
+                                    {{ site_form.footer_logo }}
+                                </div>
+                            </div>
+
+                            <!-- Menü İsimleri -->
+                            <div class="col-md-6">
+                                <h5 class="mb-3">Menü İsimleri</h5>
+                                <div class="form-group">
+                                    <label>Ana Sayfa</label>
+                                    <input type="text" name="menu_anasayfa" value="{{ site_ayarlari.menu_anasayfa|default:'Ana Sayfa' }}" class="form-control" maxlength="50" required id="id_menu_anasayfa">
+                                </div>
+                                <div class="form-group">
+                                    <label>Çatı Sistemleri</label>
+                                    <input type="text" name="menu_cati" value="{{ site_ayarlari.menu_cati|default:'Çatı Sistemleri' }}" class="form-control" maxlength="50" required id="id_menu_cati">
+                                </div>
+                                <div class="form-group">
+                                    <label>Hizmetler</label>
+                                    <input type="text" name="menu_hizmetler" value="{{ site_ayarlari.menu_hizmetler|default:'Hizmetler' }}" class="form-control" maxlength="50" required id="id_menu_hizmetler">
+                                </div>
+                                <div class="form-group">
+                                    <label>Projeler</label>
+                                    <input type="text" name="menu_projeler" value="{{ site_ayarlari.menu_projeler|default:'Projeler' }}" class="form-control" maxlength="50" required id="id_menu_projeler">
+                                </div>
+                                <div class="form-group">
+                                    <label>Referanslar</label>
+                                    <input type="text" name="menu_referanslar" value="{{ site_ayarlari.menu_referanslar|default:'Referanslar' }}" class="form-control" maxlength="50" required id="id_menu_referanslar">
+                                </div>
+                                <div class="form-group">
+                                    <label>İletişim</label>
+                                    <input type="text" name="menu_iletisim" value="{{ site_ayarlari.menu_iletisim|default:'İletişim' }}" class="form-control" maxlength="50" required id="id_menu_iletisim">
+                                </div>
+                            </div>
+
+                            <!-- Footer Bilgileri -->
+                            <div class="col-md-6">
+                                <h5 class="mb-3">Footer Bilgileri</h5>
+                                <div class="mb-3">
+                                    <label for="id_footer_telefon" class="form-label">Telefon</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="id_footer_telefon" name="footer_telefon" value="{{ site_ayarlari.footer_telefon }}">
+                                        <div class="input-group-text">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="id_footer_telefon_aktif" name="footer_telefon_aktif" {% if site_ayarlari.footer_telefon_aktif %}checked{% endif %}>
+                                                <label class="form-check-label" for="id_footer_telefon_aktif">Aktif</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="id_mobile_phone" class="form-label">Cep Telefonu</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="id_mobile_phone" name="mobile_phone" value="{{ site_ayarlari.mobile_phone }}">
+                                        <div class="input-group-text">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="id_mobile_phone_aktif" name="mobile_phone_aktif" {% if site_ayarlari.mobile_phone_aktif %}checked{% endif %}>
+                                                <label class="form-check-label" for="id_mobile_phone_aktif">Aktif</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="id_whatsapp" class="form-label">WhatsApp</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="id_whatsapp" name="whatsapp" value="{{ site_ayarlari.whatsapp }}">
+                                        <div class="input-group-text">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="id_whatsapp_aktif" name="whatsapp_aktif" {% if site_ayarlari.whatsapp_aktif %}checked{% endif %}>
+                                                <label class="form-check-label" for="id_whatsapp_aktif">Aktif</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="id_footer_email" class="form-label">E-posta</label>
+                                    <div class="input-group">
+                                        <input type="email" class="form-control" id="id_footer_email" name="footer_email" value="{{ site_ayarlari.footer_email }}">
+                                        <div class="input-group-text">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="id_footer_email_aktif" name="footer_email_aktif" {% if site_ayarlari.footer_email_aktif %}checked{% endif %}>
+                                                <label class="form-check-label" for="id_footer_email_aktif">Aktif</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="id_footer_adres" class="form-label">Adres</label>
+                                    <div class="input-group">
+                                        <textarea class="form-control" id="id_footer_adres" name="footer_adres" rows="2">{{ site_ayarlari.footer_adres }}</textarea>
+                                        <div class="input-group-text">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="id_footer_adres_aktif" name="footer_adres_aktif" {% if site_ayarlari.footer_adres_aktif %}checked{% endif %}>
+                                                <label class="form-check-label" for="id_footer_adres_aktif">Aktif</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="id_google_maps_url" class="form-label">Google Haritalar Linki</label>
+                                    <div class="input-group">
+                                        <input type="url" class="form-control" id="id_google_maps_url" name="google_maps_url" value="{{ site_ayarlari.google_maps_url }}">
+                                        <div class="input-group-text">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="id_google_maps_url_aktif" name="google_maps_url_aktif" {% if site_ayarlari.google_maps_url_aktif %}checked{% endif %}>
+                                                <label class="form-check-label" for="id_google_maps_url_aktif">Aktif</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Copyright Metni</label>
+                                    {{ site_form.footer_copyright }}
+                                    <small class="text-muted">Örnek: © 2024 Üst Çatı. Tüm hakları saklıdır.</small>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="id_footer_description" class="form-label">Footer Açıklama</label>
+                                    <textarea class="form-control" id="id_footer_description" name="footer_description" rows="3">{{ site_ayarlari.footer_description }}</textarea>
+                                    <small class="text-muted">Footer bölümünde görünecek açıklama metni.</small>
+                                </div>
+                            </div>
+
+                            <!-- Sosyal Medya -->
+                            <div class="col-md-6">
+                                <h5 class="mb-3">Sosyal Medya</h5>
+                                <div class="form-group">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <label class="me-2">Facebook</label>
+                                        <div class="form-check form-switch">
+                                            {{ site_form.facebook_aktif }}
+                                        </div>
+                                    </div>
+                                    {{ site_form.facebook }}
+                                </div>
+                                <div class="form-group">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <label class="me-2">Twitter</label>
+                                        <div class="form-check form-switch">
+                                            {{ site_form.twitter_aktif }}
+                                        </div>
+                                    </div>
+                                    {{ site_form.twitter }}
+                                </div>
+                                <div class="form-group">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <label class="me-2">Instagram</label>
+                                        <div class="form-check form-switch">
+                                            {{ site_form.instagram_aktif }}
+                                        </div>
+                                    </div>
+                                    {{ site_form.instagram }}
+                                </div>
+                                <div class="form-group">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <label class="me-2">LinkedIn</label>
+                                        <div class="form-check form-switch">
+                                            {{ site_form.linkedin_aktif }}
+                                        </div>
+                                    </div>
+                                    {{ site_form.linkedin }}
+                                </div>
+                                <div class="form-group">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <label class="me-2">YouTube</label>
+                                        <div class="form-check form-switch">
+                                            {{ site_form.youtube_aktif }}
+                                        </div>
+                                    </div>
+                                    {{ site_form.youtube }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-right">
+                            <button type="submit" class="btn btn-primary">Site Ayarlarını Kaydet</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const adresInput = document.querySelector('textarea[name="footer_adres"]');
+        const mapsUrlInput = document.querySelector('input[name="google_maps_url"]');
+        const openMapsButton = document.getElementById('openMapsButton');
+        const urlAktifSwitch = document.querySelector('input[name="google_maps_url_aktif"]');
+        
+        function updateMapUrl(address) {
+            if (address) {
+                const encodedAddress = encodeURIComponent(address);
+                // Google Maps Embed URL'sini oluştur (API key olmadan)
+                const embedUrl = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3000!2d!3d!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2s${encodedAddress}!5e0!3m2!1str!2str!4v1`;
+                
+                // URL'yi input'a yerleştir
+                mapsUrlInput.value = embedUrl;
+                
+                // URL aktiflik switch'ini aç
+                if (urlAktifSwitch) {
+                    urlAktifSwitch.checked = true;
+                }
+            }
+        }
+
+        if (adresInput) {
+            // Adres değiştiğinde haritayı güncelle
+            adresInput.addEventListener('input', function() {
+                updateMapUrl(this.value);
+            });
+
+            // Adres alanından focus çıktığında da güncelle
+            adresInput.addEventListener('blur', function() {
+                updateMapUrl(this.value);
+            });
+        }
+
+        if (openMapsButton) {
+            // Maps butonu tıklandığında
+            openMapsButton.addEventListener('click', function() {
+                const address = adresInput.value;
+                if (address) {
+                    const encodedAddress = encodeURIComponent(address);
+                    // Normal Google Maps URL'sini oluştur
+                    const searchUrl = `https://www.google.com/maps/search/${encodedAddress}`;
+                    window.open(searchUrl, '_blank');
+                    
+                    // Harita URL'sini güncelle
+                    updateMapUrl(address);
+                    
+                    // Kullanıcıya bilgi ver
+                    alert('Google Maps açıldı. Doğru konumu seçtikten sonra, haritanın üzerindeki "Paylaş" butonuna tıklayın ve "Haritayı Yerleştir" seçeneğinden iframe kodunu kopyalayıp buraya yapıştırın.');
+                } else {
+                    alert('Lütfen önce bir adres girin.');
+                }
+            });
+        }
+
+        // Sayfa yüklendiğinde mevcut adres varsa haritayı güncelle
+        if (adresInput && adresInput.value) {
+            updateMapUrl(adresInput.value);
+        }
+    });
+</script>
+{% endblock %} 

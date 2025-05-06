@@ -1,0 +1,10 @@
+Django>=4.2.0
+Pillow>=10.0.0  # Resim işleme için
+python-dotenv>=1.0.0  # Çevresel değişkenler için
+django-crispy-forms>=2.0  # Form işleme için
+crispy-bootstrap5>=0.7  # Bootstrap form desteği için
+django-ckeditor>=6.7.0  # Zengin metin editörü için
+django-cleanup>=8.0.0  # Medya dosyalarının otomatik temizlenmesi için
+whitenoise>=6.5.0  # Statik dosya sunumu için
+gunicorn>=21.2.0  # Production sunucusu için
+psycopg2-binary>=2.9.9  # PostgreSQL veritabanı desteği için 

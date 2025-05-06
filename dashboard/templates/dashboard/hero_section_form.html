@@ -1,0 +1,421 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block title %}{% if hero_section %}Hero Section Düzenle{% else %}Yeni Hero Section{% endif %}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .media-gallery {
+        max-height: 400px;
+        overflow-y: auto;
+    }
+    .media-item {
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .media-item:hover {
+        transform: scale(1.02);
+    }
+    .media-item.selected {
+        border: 3px solid #007bff;
+    }
+    .nav-tabs .nav-link.active {
+        font-weight: bold;
+    }
+    .btn-upload {
+        padding: 0.375rem 0.75rem;
+        font-size: 0.875rem;
+        line-height: 1.5;
+        border-radius: 0.2rem;
+    }
+    .upload-buttons-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    .custom-file-upload {
+        display: inline-block;
+        padding: 6px 12px;
+        cursor: pointer;
+        background-color: #4e73df;
+        color: white;
+        border-radius: 4px;
+        margin-bottom: 10px;
+    }
+    .custom-file-upload:hover {
+        background-color: #2e59d9;
+    }
+    #id_background_image {
+        display: none;
+    }
+    .file-name {
+        margin-left: 10px;
+        color: #666;
+    }
+    #image-preview {
+        margin-top: 10px;
+        width: 100%;
+        height: 300px;
+        overflow: hidden;
+        position: relative;
+        border-radius: 5px;
+    }
+    #image-preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+    }
+    .image-preview {
+        width: 100%;
+        height: 300px;
+        border: 2px dashed #ddd;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        position: relative;
+        background-color: #f8f9fc;
+    }
+    .image-preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+    }
+    .image-preview .no-image {
+        color: #999;
+        font-size: 16px;
+    }
+    .media-item img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        object-position: center;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">{% if hero_section %}Hero Section Düzenle{% else %}Yeni Hero Section{% endif %}</h1>
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Hero Section Bilgileri</h6>
+        </div>
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data" id="heroForm">
+                {% csrf_token %}
+                
+                <div class="form-group">
+                    <label for="id_welcome_text">Hoş Geldiniz Metni</label>
+                    {{ form.welcome_text }}
+                </div>
+
+                <div class="form-group">
+                    <label for="id_title">Başlık</label>
+                    {{ form.title }}
+                </div>
+
+                <div class="form-group">
+                    <label for="id_rotating_words">Dönen Kelimeler (Her satıra bir kelime)</label>
+                    {{ form.rotating_words }}
+                </div>
+
+                <div class="form-group">
+                    <label for="id_description">Açıklama</label>
+                    {{ form.description }}
+                </div>
+
+                <div class="form-group">
+                    <label for="id_button_text">Buton Metni</label>
+                    {{ form.button_text }}
+                </div>
+
+                <div class="form-group">
+                    <label>Arka Plan Resmi</label>
+                    <div id="image-preview" class="mb-3">
+                        {% if hero_section and hero_section.background_image %}
+                            <img src="{{ hero_section.background_image.url }}" alt="Mevcut Görsel">
+                        {% endif %}
+                    </div>
+                    <div class="upload-buttons-wrapper">
+                        <button type="button" class="btn btn-primary btn-upload" id="openMediaGallery">
+                            <i class="fas fa-photo-video"></i> Medya Galerisinden Seç
+                        </button>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="id_background_image" name="background_image" accept="image/*">
+                            <label class="custom-file-label" for="id_background_image">Resim Seç</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="custom-control custom-switch">
+                        {{ form.is_active }}
+                        <label class="custom-control-label" for="id_is_active">Aktif</label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+                <a href="{% url 'dashboard:hero_section_list' %}" class="btn btn-secondary">İptal</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Medya Galerisi Modal -->
+<div class="modal fade" id="mediaModal" tabindex="-1" role="dialog" aria-labelledby="mediaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mediaModalLabel">Medya Seç</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs mb-3" id="mediaTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="gallery-tab" data-toggle="tab" href="#gallery" role="tab">
+                            <i class="fas fa-images"></i> Medya Galerisi
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="upload-tab" data-toggle="tab" href="#upload" role="tab">
+                            <i class="fas fa-upload"></i> Yeni Yükle
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="mediaTabContent">
+                    <div class="tab-pane fade show active" id="gallery" role="tabpanel">
+                        <div class="media-gallery">
+                            <div class="row" id="mediaGalleryContent">
+                                <!-- AJAX ile yüklenecek -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="upload" role="tabpanel">
+                        <form id="uploadForm" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="mediaTitle">Başlık</label>
+                                <input type="text" class="form-control" id="mediaTitle" name="baslik" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="mediaFile">Resim</label>
+                                <input type="file" class="form-control-file" id="mediaFile" name="resim" accept="image/*" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Yükle</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                <button type="button" class="btn btn-primary" id="selectMedia" disabled>Seç</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        console.log('Document ready');
+        
+        // Modal açma butonu
+        $('#openMediaGallery').click(function() {
+            console.log('Modal açma butonuna tıklandı');
+            $('#mediaModal').modal('show');
+        });
+
+        // Dosya seçildiğinde
+        $('#id_background_image').change(function() {
+            var fileName = $(this).val().split('\\').pop();
+            if (fileName) {
+                $(this).next('.custom-file-label').html(fileName);
+                
+                // Dosya önizleme
+                if (this.files && this.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        $('#image-preview').html(`<img src="${e.target.result}" alt="Seçilen Görsel">`);
+                    }
+                    reader.readAsDataURL(this.files[0]);
+                }
+            } else {
+                $(this).next('.custom-file-label').html('Resim Seç');
+            }
+        });
+
+        // Medya Galerisi Yükleme
+        function loadMediaGallery() {
+            console.log('Medya galerisi yükleniyor...');
+            $.get('{% url "dashboard:medya_listesi" %}?format=json', function(data) {
+                console.log('Medya verisi alındı:', data);
+                var content = '';
+                data.forEach(function(item) {
+                    if (item.resim) {  // Resim URL'si varsa
+                        content += `
+                            <div class="col-md-3 mb-3">
+                                <div class="card media-item" data-media-id="${item.id}" data-media-url="${item.resim}">
+                                    <img src="${item.resim}" class="card-img-top" alt="${item.baslik}">
+                                    <div class="card-body">
+                                        <p class="card-text small">${item.baslik}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+                $('#mediaGalleryContent').html(content);
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                console.error('Medya galerisi yüklenirken hata:', textStatus, errorThrown);
+                alert('Medya galerisi yüklenirken bir hata oluştu.');
+            });
+        }
+
+        // Modal Açıldığında Galeriyi Yükle
+        $('#mediaModal').on('show.bs.modal', function() {
+            console.log('Modal açılıyor, galeri yükleniyor...');
+            loadMediaGallery();
+        });
+
+        // Medya Seçimi
+        $(document).on('click', '.media-item', function() {
+            console.log('Medya seçildi');
+            $('.media-item').removeClass('selected');
+            $(this).addClass('selected');
+            $('#selectMedia').prop('disabled', false);
+        });
+
+        // Seçilen Medyayı Kullan
+        $('#selectMedia').click(function() {
+            console.log('Seç butonuna tıklandı');
+            var selectedMedia = $('.media-item.selected');
+            if (selectedMedia.length) {
+                var mediaId = selectedMedia.data('media-id');
+                var mediaUrl = selectedMedia.data('media-url');
+                console.log('Seçilen medya ID:', mediaId);
+                console.log('Seçilen medya URL:', mediaUrl);
+                
+                try {
+                    // Gizli input oluştur
+                    var hiddenInput = $('<input>').attr({
+                        type: 'hidden',
+                        name: 'background_image_id',
+                        value: mediaId
+                    });
+                    console.log('Gizli input oluşturuldu:', hiddenInput);
+                    
+                    // Mevcut gizli input varsa güncelle, yoksa ekle
+                    $('input[name="background_image_id"]').remove();
+                    $('#heroForm').append(hiddenInput);
+                    console.log('Gizli input forma eklendi');
+                    
+                    // Önizlemeyi güncelle
+                    $('#image-preview').html(`<img src="${mediaUrl}" alt="Seçilen Görsel">`);
+                    console.log('Önizleme güncellendi');
+                    
+                    // Dosya input'unu temizle
+                    $('#id_background_image').val('');
+                    $('#id_background_image').next('.custom-file-label').html('Medya galerisinden seçildi');
+                    console.log('Dosya input temizlendi');
+                    
+                    // Modalı kapat
+                    $('#mediaModal').modal('hide');
+                    console.log('Modal kapatıldı');
+                } catch (error) {
+                    console.error('Medya seçimi sırasında hata:', error);
+                    alert('Medya seçimi sırasında bir hata oluştu. Lütfen konsolu kontrol edin.');
+                }
+            } else {
+                console.warn('Seçili medya bulunamadı');
+                alert('Lütfen bir medya seçin.');
+            }
+        });
+
+        // Yeni Medya Yükleme
+        $('#uploadForm').submit(function(e) {
+            e.preventDefault();
+            console.log('Yeni medya yükleme formu gönderiliyor...');
+            var formData = new FormData(this);
+            
+            $.ajax({
+                url: '{% url "dashboard:medya_yukle" %}',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    console.log('Medya yükleme başarılı:', response);
+                    loadMediaGallery();
+                    $('#gallery-tab').tab('show');
+                    $('#uploadForm')[0].reset();
+                },
+                error: function(xhr, status, error) {
+                    console.error('Medya yükleme hatası:', error);
+                    alert('Yükleme sırasında bir hata oluştu.');
+                }
+            });
+        });
+
+        // Form gönderimi
+        $('#heroForm').submit(function(e) {
+            console.log('Form gönderiliyor...');
+            var formData = new FormData(this);
+            console.log('Form verileri:', Object.fromEntries(formData));
+            
+            // Medya seçimi kontrolü
+            var backgroundImageId = $('input[name="background_image_id"]').val();
+            var backgroundImageFile = $('#id_background_image')[0].files[0];
+            var currentBackgroundImage = $('#image-preview img').attr('src');
+            
+            console.log('Background Image ID:', backgroundImageId);
+            console.log('Background Image File:', backgroundImageFile);
+            console.log('Current Background Image:', currentBackgroundImage);
+            
+            // Eğer mevcut bir resim varsa veya yeni bir resim seçildiyse devam et
+            if (currentBackgroundImage || backgroundImageId || backgroundImageFile) {
+                console.log('Arka plan resmi mevcut veya seçildi');
+                return true;
+            }
+            
+            console.warn('Arka plan resmi seçilmedi');
+            alert('Lütfen bir arka plan resmi seçin.');
+            e.preventDefault();
+            return false;
+        });
+    });
+</script>
+{% endblock %} 

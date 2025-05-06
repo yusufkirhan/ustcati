@@ -1,0 +1,72 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block title %}Blog Yazıları{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 text-gray-800">Blog Yazıları</h1>
+        <a href="{% url 'dashboard:blog_ekle' %}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Yeni Yazı Ekle
+        </a>
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Resim</th>
+                            <th>Başlık</th>
+                            <th>Oluşturulma Tarihi</th>
+                            <th>Durum</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for blog in blogs %}
+                        <tr>
+                            <td>
+                                <img src="{{ blog.image.url }}" alt="{{ blog.title }}" style="max-width: 100px;">
+                            </td>
+                            <td>{{ blog.title }}</td>
+                            <td>{{ blog.created_at|date:"d.m.Y H:i" }}</td>
+                            <td>
+                                {% if blog.is_active %}
+                                    <span class="badge badge-success">Aktif</span>
+                                {% else %}
+                                    <span class="badge badge-danger">Pasif</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{% url 'dashboard:blog_duzenle' blog.id %}" class="btn btn-info btn-sm">
+                                    <i class="fas fa-edit"></i> Düzenle
+                                </a>
+                                <a href="{% url 'dashboard:blog_sil' blog.id %}" class="btn btn-danger btn-sm" 
+                                   onclick="return confirm('Bu yazıyı silmek istediğinizden emin misiniz?')">
+                                    <i class="fas fa-trash"></i> Sil
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center">Henüz blog yazısı eklenmemiş.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

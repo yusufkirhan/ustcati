@@ -1,0 +1,412 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Hizmetlerimiz - Üst Çatı{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="services-hero" data-aos="fade-up">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="services-title" data-editable="text" data-field="services_hero_title">{{ site.services_hero_title|default:"Profesyonel Çatı<br>Hizmetlerimiz" }}</h1>
+                <p class="services-subtitle" data-editable="text" data-field="services_hero_subtitle">{{ site.services_hero_subtitle|default:"Uzman ekibimiz ve kaliteli malzemelerimizle çatınız güvende" }}</p>
+            </div>
+            <div class="col-lg-6">
+                <img src="{% if site.services_hero_image %}{{ site.services_hero_image.url }}{% else %}/media/medya/services-hero.jpg{% endif %}" alt="Çatı Hizmetleri" class="img-fluid rounded-3 shadow-lg" data-editable="image" data-field="services_hero_image">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Grid -->
+<section class="services-grid py-5">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Service Card 1 -->
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3 data-editable="text" data-field="service1_title">{{ site.service1_title|default:"Çatı Yapımı" }}</h3>
+                    <p data-editable="text" data-field="service1_description">{{ site.service1_description|default:"Modern teknikler ve kaliteli malzemelerle yeni çatı inşası gerçekleştiriyoruz." }}</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> <span data-editable="text" data-field="service1_feature1">{{ site.service1_feature1|default:"Çelik Konstrüksiyon" }}</span></li>
+                        <li><i class="fas fa-check"></i> <span data-editable="text" data-field="service1_feature2">{{ site.service1_feature2|default:"Ahşap Çatı" }}</span></li>
+                        <li><i class="fas fa-check"></i> <span data-editable="text" data-field="service1_feature3">{{ site.service1_feature3|default:"Kiremit Döşeme" }}</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Service Card 2 -->
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3 data-editable="text" data-field="service2_title">{{ site.service2_title|default:"Çatı Onarımı" }}</h3>
+                    <p data-editable="text" data-field="service2_description">{{ site.service2_description|default:"Her türlü çatı onarım ve bakım hizmetini profesyonel ekibimizle sağlıyoruz." }}</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> <span data-editable="text" data-field="service2_feature1">{{ site.service2_feature1|default:"Su Yalıtımı" }}</span></li>
+                        <li><i class="fas fa-check"></i> <span data-editable="text" data-field="service2_feature2">{{ site.service2_feature2|default:"Kiremit Değişimi" }}</span></li>
+                        <li><i class="fas fa-check"></i> <span data-editable="text" data-field="service2_feature3">{{ site.service2_feature3|default:"Oluk Sistemleri" }}</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Service Card 3 -->
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 data-editable="text" data-field="service3_title">{{ site.service3_title|default:"İzolasyon" }}</h3>
+                    <p data-editable="text" data-field="service3_description">{{ site.service3_description|default:"En son teknoloji ile ısı ve su yalıtımı çözümleri sunuyoruz." }}</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> <span data-editable="text" data-field="service3_feature1">{{ site.service3_feature1|default:"Isı Yalıtımı" }}</span></li>
+                        <li><i class="fas fa-check"></i> <span data-editable="text" data-field="service3_feature2">{{ site.service3_feature2|default:"Nem Yalıtımı" }}</span></li>
+                        <li><i class="fas fa-check"></i> <span data-editable="text" data-field="service3_feature3">{{ site.service3_feature3|default:"Ses Yalıtımı" }}</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose Us -->
+<section class="why-choose-us py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5" data-aos="fade-up" data-editable="text" data-field="why_choose_title">{{ site.why_choose_title|default:"Neden Bizi Seçmelisiniz?" }}</h2>
+        <div class="row g-4">
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-box text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-medal"></i>
+                    </div>
+                    <h4 data-editable="text" data-field="feature1_title">{{ site.feature1_title|default:"12+ Yıl Deneyim" }}</h4>
+                    <p data-editable="text" data-field="feature1_description">{{ site.feature1_description|default:"Sektörde uzun yıllara dayanan tecrübe" }}</p>
+                </div>
+            </div>
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-box text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h4 data-editable="text" data-field="feature2_title">{{ site.feature2_title|default:"Uzman Ekip" }}</h4>
+                    <p data-editable="text" data-field="feature2_description">{{ site.feature2_description|default:"Profesyonel ve deneyimli çalışanlar" }}</p>
+                </div>
+            </div>
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-box text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h4 data-editable="text" data-field="feature3_title">{{ site.feature3_title|default:"Zamanında Teslimat" }}</h4>
+                    <p data-editable="text" data-field="feature3_description">{{ site.feature3_description|default:"Projelerinizi söz verdiğimiz sürede tamamlama" }}</p>
+                </div>
+            </div>
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="400">
+                <div class="feature-box text-center">
+                    <div class="feature-icon">
+                        <i class="fas fa-hand-holding-usd"></i>
+                    </div>
+                    <h4 data-editable="text" data-field="feature4_title">{{ site.feature4_title|default:"Uygun Fiyat" }}</h4>
+                    <p data-editable="text" data-field="feature4_description">{{ site.feature4_description|default:"Kaliteli hizmet, rekabetçi fiyatlar" }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="cta-section py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8" data-aos="fade-right">
+                <h2 data-editable="text" data-field="services_cta_title">{{ site.services_cta_title|default:"Ücretsiz Keşif ve Fiyat Teklifi Alın" }}</h2>
+                <p data-editable="text" data-field="services_cta_description">{{ site.services_cta_description|default:"Çatı projeleriniz için hemen bizimle iletişime geçin." }}</p>
+            </div>
+            <div class="col-lg-4 text-lg-end" data-aos="fade-left">
+                <a href="#" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#teklifModal">İletişime Geç</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Medya Seçme Modal -->
+<div class="modal fade" id="mediaModal" tabindex="-1" role="dialog" aria-labelledby="mediaModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mediaModalLabel">Medya Seç</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="preview-container mb-3" style="display: none;">
+                            <img id="imagePreview" src="" alt="Önizleme" class="img-fluid rounded" style="max-height: 200px;">
+                        </div>
+                        <div class="input-group">
+                            <input type="file" class="form-control" id="mediaUpload" accept="image/*">
+                            <button class="btn btn-primary" type="button" id="uploadButton" disabled>Yükle</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="mediaGrid" role="grid" aria-label="Medya Galerisi">
+                    <!-- Medya öğeleri buraya dinamik olarak eklenecek -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block extra_js %}
+<script src="{% static 'js/image-editor.js' %}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    if (document.body.classList.contains('is-admin')) {
+        // Tüm düzenlenebilir metin alanlarını seç
+        const editableTextElements = document.querySelectorAll('[data-editable="text"]');
+        
+        editableTextElements.forEach(element => {
+            // Hover efekti
+            element.addEventListener('mouseenter', () => {
+                element.style.backgroundColor = 'rgba(0, 123, 255, 0.1)';
+                
+                if (!element.querySelector('.edit-icon')) {
+                    const editIcon = document.createElement('i');
+                    editIcon.className = 'fas fa-edit edit-icon';
+                    element.appendChild(editIcon);
+                }
+            });
+
+            element.addEventListener('mouseleave', () => {
+                element.style.backgroundColor = '';
+                const editIcon = element.querySelector('.edit-icon');
+                if (editIcon) editIcon.remove();
+            });
+
+            // Tıklama işlemi
+            element.addEventListener('click', (e) => {
+                e.preventDefault();
+                element.contentEditable = true;
+                element.focus();
+                
+                element.addEventListener('blur', async () => {
+                    element.contentEditable = false;
+                    const newContent = element.textContent.trim();
+                    
+                    try {
+                        const response = await fetch('/api/save-content/', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': getCookie('csrftoken')
+                            },
+                            body: JSON.stringify({
+                                field: element.dataset.field,
+                                content: newContent
+                            })
+                        });
+
+                        const data = await response.json();
+                        
+                        if (!response.ok) {
+                            throw new Error(data.message || `HTTP error! status: ${response.status}`);
+                        }
+                        
+                        if (data.status === 'success') {
+                            showNotification('Değişiklikler kaydedildi');
+                        } else {
+                            throw new Error(data.message || 'Kayıt başarısız');
+                        }
+                    } catch (error) {
+                        console.error('Kayıt hatası:', error);
+                        showNotification('Kayıt sırasında bir hata oluştu: ' + error.message, 'error');
+                    }
+                }, { once: true });
+            });
+        });
+    }
+});
+
+// CSRF Token alma
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+// Bildirim gösterme fonksiyonu
+function showNotification(message, type = 'success') {
+    const notification = document.createElement('div');
+    notification.className = `alert alert-${type === 'error' ? 'danger' : 'success'} position-fixed top-0 end-0 m-3`;
+    notification.style.zIndex = '9999';
+    notification.setAttribute('role', 'alert');
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
+}
+</script>
+{% endblock %}
+
+<style>
+/* Resim düzenleme stilleri */
+.image-editor-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.image-edit-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 100;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.image-editor-wrapper:hover .image-edit-button {
+    opacity: 1;
+}
+
+/* Mevcut stiller */
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.d-none {
+    display: none;
+}
+
+.save-notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    z-index: 9999;
+    animation: fadeInOut 2s ease-in-out;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translateY(20px); }
+    20% { opacity: 1; transform: translateY(0); }
+    80% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-20px); }
+}
+
+[data-editable] {
+    transition: all 0.3s ease;
+}
+
+[data-editable]:hover {
+    cursor: pointer;
+}
+
+[data-editable]:focus {
+    outline: 2px solid #007bff;
+    padding: 5px;
+    background-color: white;
+}
+
+.media-item {
+    position: relative;
+    border: 2px solid transparent;
+    transition: all 0.3s;
+    cursor: pointer;
+    margin-bottom: 15px;
+}
+
+.media-item:hover {
+    border-color: #007bff;
+    transform: scale(1.02);
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.media-item img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Erişilebilirlik için focus stilleri */
+.media-item:focus {
+    outline: 3px solid #007bff;
+    border-radius: 8px;
+}
+
+.media-item:focus-visible {
+    outline: 3px solid #007bff;
+    border-radius: 8px;
+}
+
+/* Modal erişilebilirlik stilleri */
+.modal-dialog:focus {
+    outline: none;
+}
+
+.btn-close:focus {
+    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+    outline: none;
+}
+
+.preview-container {
+    text-align: center;
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.preview-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+#uploadButton:disabled {
+    cursor: not-allowed;
+}
+
+.spinner-border {
+    margin-right: 5px;
+}
+</style>
+{% endblock %} 

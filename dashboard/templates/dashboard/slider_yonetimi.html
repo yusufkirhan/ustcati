@@ -1,0 +1,32 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+<div class="container-fluid">
+    <h4 class="mb-4">Slider Yönetimi</h4>
+
+    <div class="card">
+        <div class="card-body">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="sliderBackground" class="form-label">Arka Plan Resmi</label>
+                    <input type="file" class="form-control" id="sliderBackground" name="sliderBackground" accept="image/*">
+                </div>
+                <div class="mb-3">
+                    <label for="sliderTitle" class="form-label">Başlık</label>
+                    <input type="text" class="form-control" id="sliderTitle" name="sliderTitle" placeholder="Başlığı girin">
+                </div>
+                <div class="mb-3">
+                    <label for="sliderDescription" class="form-label">Açıklama</label>
+                    <textarea class="form-control" id="sliderDescription" name="sliderDescription" rows="3" placeholder="Açıklamayı girin"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="sliderWords" class="form-label">Döngüsel Kelimeler (virgülle ayırarak girin)</label>
+                    <input type="text" class="form-control" id="sliderWords" name="sliderWords" placeholder="Kelime1, Kelime2, Kelime3">
+                </div>
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,68 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block title %}Mesaj Detayı{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="h3 mb-4 text-gray-800">Mesaj Detayı</h1>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                    <h6 class="m-0 font-weight-bold text-primary">Mesaj İçeriği</h6>
+                    <div>
+                        <a href="{% url 'dashboard:mesajlar' %}" class="btn btn-secondary btn-sm">
+                            <i class="fas fa-arrow-left"></i> Geri Dön
+                        </a>
+                        <a href="{% url 'dashboard:mesaj_sil' mesaj.id %}" class="btn btn-danger btn-sm" 
+                           onclick="return confirm('Bu mesajı silmek istediğinizden emin misiniz?')">
+                            <i class="fas fa-trash"></i> Sil
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <strong>Gönderen:</strong> {{ mesaj.name }}
+                    </div>
+                    <div class="mb-3">
+                        <strong>E-posta:</strong> {{ mesaj.email }}
+                    </div>
+                    <div class="mb-3">
+                        <strong>Telefon:</strong> {{ mesaj.phone }}
+                    </div>
+                    <div class="mb-3">
+                        <strong>Konu:</strong> {{ mesaj.subject }}
+                    </div>
+                    <div class="mb-3">
+                        <strong>Tarih:</strong> {{ mesaj.created_at|date:"d.m.Y H:i" }}
+                    </div>
+                    <div class="mb-3">
+                        <strong>Durum:</strong> 
+                        {% if mesaj.status == 'pending' %}
+                            <span class="badge badge-warning">Beklemede</span>
+                        {% elif mesaj.status == 'processed' %}
+                            <span class="badge badge-info">İşlendi</span>
+                        {% elif mesaj.status == 'answered' %}
+                            <span class="badge badge-success">Yanıtlandı</span>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <strong>Mesaj:</strong>
+                        <p class="mt-2">{{ mesaj.message|linebreaks }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

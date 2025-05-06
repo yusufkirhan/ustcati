@@ -1,0 +1,71 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Başlık -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="mb-0">Gelen Teklifler</h4>
+    </div>
+
+    <!-- Teklif Listesi -->
+    <div class="card">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Ad Soyad</th>
+                            <th>Telefon</th>
+                            <th>E-posta</th>
+                            <th>Mesaj</th>
+                            <th>Tarih</th>
+                            <th>Durum</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Ahmet Yılmaz</td>
+                            <td>0532 123 45 67</td>
+                            <td>ahmet@email.com</td>
+                            <td>Çatı onarımı hakkında bilgi almak istiyorum...</td>
+                            <td>23.02.2024</td>
+                            <td>
+                                <span class="badge bg-warning">Beklemede</span>
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-success" title="Okundu İşaretle">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger" title="Sil">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.table th {
+    font-weight: 600;
+    background: #f8f9fa;
+}
+
+.badge {
+    padding: 0.5em 0.75em;
+}
+
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    margin: 0 2px;
+}
+
+.btn-sm i {
+    width: 16px;
+}
+</style>
+{% endblock %} 

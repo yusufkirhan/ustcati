@@ -1,0 +1,660 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block title %}Projelerimiz - Üst Çatı{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="services-hero" data-aos="fade-up">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="services-title" data-editable="text" data-field="projects_hero_title">{{ site.projects_hero_title|default:"Tamamlanan<br>Projelerimiz" }}</h1>
+                <p class="services-subtitle" data-editable="text" data-field="projects_hero_subtitle">{{ site.projects_hero_subtitle|default:"Başarıyla tamamladığımız projelerimizden örnekler" }}</p>
+            </div>
+            <div class="col-lg-6">
+                <img src="{% if site.projects_hero_image %}{{ site.projects_hero_image.url }}{% else %}/media/medya/projects-hero.jpg{% endif %}" alt="Projelerimiz" class="img-fluid rounded-3 shadow-lg" data-editable="image" data-field="projects_hero_image">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Projects Grid -->
+<section class="projects-grid py-5">
+    <div class="container">
+        <!-- Filter Buttons -->
+        <div class="filter-buttons text-center mb-5" data-aos="fade-up">
+            <button class="btn btn-filter active" data-filter="all">Tümü</button>
+            <button class="btn btn-filter" data-filter="residential">Konut</button>
+            <button class="btn btn-filter" data-filter="commercial">Ticari</button>
+            <button class="btn btn-filter" data-filter="industrial">Endüstriyel</button>
+        </div>
+
+        <div class="row g-4">
+            {% for project in projects %}
+            <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter|multiply:100 }}">
+                <div class="project-card" data-category="{{ project.category }}">
+                    <div class="project-image">
+                        <div class="image-editor-wrapper" style="position: relative;">
+                            <img src="{{ project.image.url }}" alt="{{ project.title }}" class="img-fluid" data-editable="image" data-field="project{{ forloop.counter }}_image">
+                            {% if is_admin %}
+                            <button class="btn btn-sm btn-primary image-edit-button" aria-label="Resmi düzenle" style="position: absolute; top: 10px; right: 10px;">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            {% endif %}
+                        </div>
+                        <div class="project-overlay">
+                            <div class="project-content">
+                                <h3 data-editable="text" data-field="project{{ forloop.counter }}_title">{{ project.title }}</h3>
+                                <p data-editable="text" data-field="project{{ forloop.counter }}_description">{{ project.description }}</p>
+                                <a href="#" class="btn-project-details" data-bs-toggle="modal" data-bs-target="#projectModal{{ forloop.counter }}">
+                                    Detayları Gör <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project Modal -->
+            <div class="modal fade" id="projectModal{{ forloop.counter }}" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" data-editable="text" data-field="project{{ forloop.counter }}_title">{{ project.title }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="project-gallery mb-4">
+                                <img src="{{ project.image.url }}" alt="Proje Detay" class="img-fluid rounded" data-editable="image" data-field="project{{ forloop.counter }}_image">
+                            </div>
+                            <div class="project-details">
+                                <h6>Proje Detayları</h6>
+                                <p data-editable="text" data-field="project{{ forloop.counter }}_details">{{ project.details }}</p>
+                                <div class="row mt-4">
+                                    <div class="col-md-6">
+                                        <ul class="project-info">
+                                            <li><strong>Konum:</strong> <span data-editable="text" data-field="project{{ forloop.counter }}_location">{{ project.location }}</span></li>
+                                            <li><strong>Alan:</strong> <span data-editable="text" data-field="project{{ forloop.counter }}_area">{{ project.area }}</span></li>
+                                            <li><strong>Süre:</strong> <span data-editable="text" data-field="project{{ forloop.counter }}_duration">{{ project.duration }}</span></li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <ul class="project-info">
+                                            <li><strong>Malzeme:</strong> <span data-editable="text" data-field="project{{ forloop.counter }}_material">{{ project.material }}</span></li>
+                                            <li><strong>Yalıtım:</strong> <span data-editable="text" data-field="project{{ forloop.counter }}_insulation">{{ project.insulation }}</span></li>
+                                            <li><strong>Garanti:</strong> <span data-editable="text" data-field="project{{ forloop.counter }}_warranty">{{ project.warranty }}</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Project Stats -->
+<section class="project-stats py-5 bg-light">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
+                <div class="stat-item">
+                    <div class="stat-number" data-editable="text" data-field="projects_completed">{{ site.projects_completed|default:"500+" }}</div>
+                    <div class="stat-label">Tamamlanan Proje</div>
+                </div>
+            </div>
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
+                <div class="stat-item">
+                    <div class="stat-number" data-editable="text" data-field="projects_active">{{ site.projects_active|default:"50+" }}</div>
+                    <div class="stat-label">Aktif Şantiye</div>
+                </div>
+            </div>
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
+                <div class="stat-item">
+                    <div class="stat-number" data-editable="text" data-field="projects_experience">{{ site.projects_experience|default:"15+" }}</div>
+                    <div class="stat-label">Yıllık Deneyim</div>
+                </div>
+            </div>
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="400">
+                <div class="stat-item">
+                    <div class="stat-number" data-editable="text" data-field="projects_customers">{{ site.projects_customers|default:"1000+" }}</div>
+                    <div class="stat-label">Mutlu Müşteri</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Project Modals -->
+<div class="modal fade" id="projectModal1" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" data-editable="text" data-field="project1_title">{{ site.project1_title|default:"Modern Villa Projesi" }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="project-gallery mb-4">
+                    <img src="{% if site.project1_image %}{{ site.project1_image.url }}{% else %}/media/medya/project1-detail.jpg{% endif %}" alt="Proje Detay" class="img-fluid rounded" data-editable="image" data-field="project1_image">
+                </div>
+                <div class="project-details">
+                    <h6>Proje Detayları</h6>
+                    <p data-editable="text" data-field="project1_details">{{ site.project1_details|default:"Lüks villa projemizde modern tasarım anlayışıyla birlikte yüksek kaliteli malzemeler kullanılmıştır. Projede özel yalıtım sistemleri ve estetik görünüm ön planda tutulmuştur." }}</p>
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <ul class="project-info">
+                                <li><strong>Konum:</strong> <span data-editable="text" data-field="project1_location">{{ site.project1_location|default:"İstanbul, Beykoz" }}</span></li>
+                                <li><strong>Alan:</strong> <span data-editable="text" data-field="project1_area">{{ site.project1_area|default:"500 m²" }}</span></li>
+                                <li><strong>Süre:</strong> <span data-editable="text" data-field="project1_duration">{{ site.project1_duration|default:"2 Ay" }}</span></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="project-info">
+                                <li><strong>Malzeme:</strong> <span data-editable="text" data-field="project1_material">{{ site.project1_material|default:"Premium Kiremit" }}</span></li>
+                                <li><strong>Yalıtım:</strong> <span data-editable="text" data-field="project1_insulation">{{ site.project1_insulation|default:"Tam İzolasyon" }}</span></li>
+                                <li><strong>Garanti:</strong> <span data-editable="text" data-field="project1_warranty">{{ site.project1_warranty|default:"10 Yıl" }}</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Diğer projeler için benzer modallar -->
+
+<!-- Initialize AOS -->
+<script>
+    AOS.init({
+        duration: 800,
+        once: true
+    });
+
+    // Filtreleme işlevi
+    document.addEventListener('DOMContentLoaded', function() {
+        const filterButtons = document.querySelectorAll('.btn-filter');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const filter = this.dataset.filter;
+                
+                // Aktif buton stilini güncelle
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Projeleri filtrele
+                projectCards.forEach(card => {
+                    if (filter === 'all' || card.dataset.category === filter) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    });
+</script>
+
+<!-- Medya Seçme Modal -->
+<div class="modal fade" id="mediaModal" tabindex="-1" role="dialog" aria-labelledby="mediaModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mediaModalLabel">Medya Seç</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="preview-container mb-3" style="display: none;">
+                            <img id="imagePreview" src="" alt="Önizleme" class="img-fluid rounded" style="max-height: 200px;">
+                        </div>
+                        <div class="input-group">
+                            <input type="file" class="form-control" id="mediaUpload" accept="image/*">
+                            <button class="btn btn-primary" type="button" id="uploadButton" disabled>Yükle</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="mediaGrid" role="grid" aria-label="Medya Galerisi">
+                    <!-- Medya öğeleri buraya dinamik olarak eklenecek -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/image-editor.js' %}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Admin kontrolü
+    const isAdmin = document.body.classList.contains('is-admin');
+    console.log('Admin durumu:', isAdmin);
+    
+    if (isAdmin) {
+        // Tüm düzenlenebilir alanları seç
+        const editableElements = document.querySelectorAll('[data-editable]');
+        console.log('Düzenlenebilir alan sayısı:', editableElements.length);
+        
+        editableElements.forEach(element => {
+            // Hover efekti
+            element.addEventListener('mouseenter', () => {
+                if (element.tagName !== 'IMG') {
+                    element.style.backgroundColor = 'rgba(255,255,255,0.1)';
+                    
+                    if (!element.querySelector('.edit-icon')) {
+                        const editIcon = document.createElement('i');
+                        editIcon.className = 'fas fa-edit edit-icon';
+                        element.appendChild(editIcon);
+                    }
+                }
+            });
+
+            element.addEventListener('mouseleave', () => {
+                if (element.tagName !== 'IMG') {
+                    element.style.backgroundColor = '';
+                    const editIcon = element.querySelector('.edit-icon');
+                    if (editIcon) editIcon.remove();
+                }
+            });
+
+            // Tıklama işlemi
+            element.addEventListener('click', (e) => {
+                const type = element.dataset.editable;
+                console.log('Tıklanan element:', { type, field: element.dataset.field });
+                
+                if (type === 'text') {
+                    e.preventDefault();
+                    element.contentEditable = true;
+                    element.focus();
+                    
+                    element.addEventListener('blur', async () => {
+                        element.contentEditable = false;
+                        const newContent = element.textContent.trim();
+                        
+                        try {
+                            const result = await saveContent(element.dataset.field, newContent);
+                            if (result.status === 'success') {
+                                showNotification('Değişiklikler kaydedildi');
+                            }
+                        } catch (error) {
+                            console.error('Kayıt hatası:', error);
+                            showNotification('Kayıt sırasında bir hata oluştu', 'error');
+                        }
+                    }, { once: true });
+                }
+                
+                if (type === 'image') {
+                    e.preventDefault();
+                    currentField = element.dataset.field;
+                    console.log('Resim alanı seçildi:', currentField);
+                    loadMedia();
+                    mediaModal.show();
+                }
+            });
+        });
+
+        // Medya yükleme işlemi
+        const mediaUpload = document.getElementById('mediaUpload');
+        const uploadButton = document.getElementById('uploadButton');
+        const previewContainer = document.querySelector('.preview-container');
+        const imagePreview = document.getElementById('imagePreview');
+
+        if (mediaUpload && uploadButton) {
+            mediaUpload.addEventListener('change', function(e) {
+                const file = this.files[0];
+                
+                if (file) {
+                    if (!file.type.startsWith('image/')) {
+                        alert('Lütfen sadece resim dosyası seçin.');
+                        this.value = '';
+                        uploadButton.disabled = true;
+                        previewContainer.style.display = 'none';
+                        return;
+                    }
+                    
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        imagePreview.src = e.target.result;
+                        previewContainer.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                    
+                    uploadButton.disabled = false;
+                } else {
+                    uploadButton.disabled = true;
+                    previewContainer.style.display = 'none';
+                }
+            });
+
+            uploadButton.addEventListener('click', async function() {
+                const file = mediaUpload.files[0];
+                
+                if (file) {
+                    try {
+                        uploadButton.disabled = true;
+                        uploadButton.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Yükleniyor...';
+                        
+                        const formData = new FormData();
+                        formData.append('image', file);
+                        formData.append('field', currentField);
+                        formData.append('kategori', 'genel');
+                        
+                        const response = await fetch('/api/upload-image/', {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRFToken': getCookie('csrftoken')
+                            },
+                            body: formData
+                        });
+                        
+                        const data = await response.json();
+                        
+                        if (data.status === 'success') {
+                            addMediaItem(data.image_url, data.image_id);
+                            mediaUpload.value = '';
+                            previewContainer.style.display = 'none';
+                            showNotification('Resim başarıyla yüklendi');
+                        } else {
+                            throw new Error(data.message || 'Yükleme başarısız');
+                        }
+                    } catch (error) {
+                        console.error('Yükleme hatası:', error);
+                        alert('Resim yüklenirken bir hata oluştu: ' + error.message);
+                    } finally {
+                        uploadButton.disabled = false;
+                        uploadButton.innerHTML = 'Yükle';
+                    }
+                }
+            });
+        }
+
+        // Medya listesini yükle
+        loadMedia();
+    }
+});
+
+// Medya listesini yükle
+async function loadMedia() {
+    try {
+        const response = await fetch('/api/get-media/');
+        if (!response.ok) throw new Error('Medya yükleme başarısız');
+        
+        const data = await response.json();
+        if (data.status === 'success' && Array.isArray(data.media)) {
+            const mediaGrid = document.getElementById('mediaGrid');
+            mediaGrid.innerHTML = '';
+            
+            data.media.forEach(item => {
+                addMediaItem(item.url, item.id);
+            });
+        }
+    } catch (error) {
+        console.error('Medya yükleme hatası:', error);
+        alert('Medya listesi yüklenirken bir hata oluştu.');
+    }
+}
+
+// Medya seçim işlemi
+async function handleMediaSelection(url) {
+    const targetImage = document.querySelector(`[data-field="${currentField}"]`);
+    if (targetImage) {
+        try {
+            // URL'yi doğru formatta gönder
+            const imageUrl = url.replace('/media/media/', '/media/');
+            
+            // Sunucuya kaydet
+            const result = await saveContent(currentField, imageUrl);
+            
+            if (result.status === 'success') {
+                // Sunucudan gelen güncel URL'yi kullan
+                const updatedUrl = result.content;
+                
+                // Resmi güncelle
+                targetImage.src = updatedUrl;
+                
+                // Başarı bildirimi göster
+                showNotification('Resim başarıyla güncellendi');
+                
+                // Modalı kapat
+                if (mediaModal) {
+                    mediaModal.hide();
+                }
+                
+                // Sayfayı yenile
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            }
+        } catch (error) {
+            console.error('Resim güncelleme hatası:', error);
+            alert('Resim kaydedilirken bir hata oluştu. Lütfen tekrar deneyin.');
+        }
+    }
+}
+
+// Medya öğesi ekle
+function addMediaItem(url, id) {
+    const mediaGrid = document.getElementById('mediaGrid');
+    const col = document.createElement('div');
+    col.className = 'col-md-4 mb-3';
+    
+    // URL'yi doğru formatta kullan
+    const imageUrl = url.replace('/media/media/', '/media/');
+    
+    col.innerHTML = `
+        <div class="media-item" data-id="${id}" role="gridcell" tabindex="0" aria-label="Medya öğesi">
+            <img src="${imageUrl}" class="img-fluid rounded" alt="Medya öğesi" style="cursor: pointer; height: 150px; object-fit: cover;">
+        </div>
+    `;
+    
+    // Medya öğesine tıklama ve klavye olayları
+    const mediaItem = col.querySelector('.media-item');
+    
+    // Tıklama olayı
+    mediaItem.addEventListener('click', async function() {
+        await handleMediaSelection(imageUrl);
+    });
+    
+    // Klavye erişilebilirliği için
+    mediaItem.addEventListener('keydown', async function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            await handleMediaSelection(imageUrl);
+        }
+    });
+    
+    mediaGrid.appendChild(col);
+}
+
+// API İşlemleri
+async function saveContent(field, content) {
+    try {
+        const response = await fetch('/api/save-content/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: JSON.stringify({
+                field: field,
+                content: content
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (!response.ok || data.status !== 'success') {
+            throw new Error(data.message || 'Kayıt başarısız');
+        }
+
+        return data;
+    } catch (error) {
+        console.error('Kayıt hatası:', error);
+        throw error;
+    }
+}
+
+// CSRF Token alma
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+// Bildirim gösterme fonksiyonu
+function showNotification(message, type = 'success') {
+    const notification = document.createElement('div');
+    notification.className = `save-notification ${type === 'error' ? 'alert-danger' : 'alert-success'}`;
+    notification.textContent = message;
+    document.body.appendChild(notification);
+
+    // 3 saniye sonra bildirimi kaldır
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
+}
+</script>
+
+<style>
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.d-none {
+    display: none;
+}
+
+.save-notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    z-index: 9999;
+    animation: fadeInOut 2s ease-in-out;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translateY(20px); }
+    20% { opacity: 1; transform: translateY(0); }
+    80% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-20px); }
+}
+
+[data-editable] {
+    transition: all 0.3s ease;
+}
+
+[data-editable]:hover {
+    cursor: pointer;
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+[data-editable]:focus {
+    outline: 2px solid #007bff;
+    padding: 5px;
+    background-color: white;
+}
+
+.media-item {
+    position: relative;
+    border: 2px solid transparent;
+    transition: all 0.3s;
+    cursor: pointer;
+    margin-bottom: 15px;
+}
+
+.media-item:hover {
+    border-color: #007bff;
+    transform: scale(1.02);
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.media-item img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Erişilebilirlik için focus stilleri */
+.media-item:focus {
+    outline: 3px solid #007bff;
+    border-radius: 8px;
+}
+
+.media-item:focus-visible {
+    outline: 3px solid #007bff;
+    border-radius: 8px;
+}
+
+/* Modal erişilebilirlik stilleri */
+.modal-dialog:focus {
+    outline: none;
+}
+
+.btn-close:focus {
+    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+    outline: none;
+}
+
+.preview-container {
+    text-align: center;
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.preview-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+#uploadButton:disabled {
+    cursor: not-allowed;
+}
+
+.spinner-border {
+    margin-right: 5px;
+}
+</style>
+{% endblock %} 

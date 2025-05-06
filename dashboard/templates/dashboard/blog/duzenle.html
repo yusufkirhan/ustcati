@@ -1,0 +1,56 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block title %}Blog Yazısı Düzenle{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 text-gray-800">Blog Yazısı Düzenle</h1>
+        <a href="{% url 'dashboard:blog_list' %}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Geri Dön
+        </a>
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="title">Başlık</label>
+                    <input type="text" class="form-control" id="title" name="title" value="{{ blog.title }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="content">İçerik</label>
+                    <textarea class="form-control" id="content" name="content" rows="10" style="min-height: 300px;" required>{{ blog.content }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label>Mevcut Resim</label>
+                    <div class="mb-2">
+                        <img src="{{ blog.image.url }}" alt="{{ blog.title }}" style="max-width: 200px;">
+                    </div>
+                    <label for="image">Yeni Resim (Opsiyonel)</label>
+                    <input type="file" class="form-control-file" id="image" name="image" accept="image/*">
+                </div>
+                <div class="form-group">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="is_active" name="is_active" {% if blog.is_active %}checked{% endif %}>
+                        <label class="custom-control-label" for="is_active">Aktif</label>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Kaydet
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,250 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">Teklif Talepleri</h5>
+        </div>
+        <div class="card-body">
+            <div class="mb-3">
+                <button id="bulkReadBtn" class="btn btn-success btn-sm" disabled>
+                    <i class="fas fa-check me-1"></i> Seçilileri Okundu İşaretle
+                </button>
+                <button id="bulkDeleteBtn" class="btn btn-danger btn-sm" disabled>
+                    <i class="fas fa-trash me-1"></i> Seçilileri Sil
+                </button>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                <input type="checkbox" id="selectAll">
+                            </th>
+                            <th>Ad Soyad</th>
+                            <th>Email</th>
+                            <th>Telefon</th>
+                            <th>Konu</th>
+                            <th>Tarih</th>
+                            <th>Durum</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for teklif in teklifler %}
+                        <tr {% if not teklif.okundu %}class="table-warning"{% endif %}>
+                            <td>
+                                <input type="checkbox" class="teklif-checkbox" value="{{ teklif.id }}">
+                            </td>
+                            <td>{{ teklif.ad_soyad }}</td>
+                            <td>{{ teklif.email }}</td>
+                            <td>{{ teklif.telefon }}</td>
+                            <td>{{ teklif.konu }}</td>
+                            <td>{{ teklif.tarih|date:"d.m.Y H:i" }}</td>
+                            <td>
+                                {% if teklif.okundu %}
+                                <span class="badge bg-success">Okundu</span>
+                                {% else %}
+                                <span class="badge bg-warning">Okunmadı</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <button class="btn btn-info btn-sm btn-view" data-id="{{ teklif.id }}">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                {% if not teklif.okundu %}
+                                <button class="btn btn-success btn-sm btn-read" data-id="{{ teklif.id }}">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                                {% endif %}
+                                <button class="btn btn-danger btn-sm btn-delete" data-id="{{ teklif.id }}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="8" class="text-center">Henüz teklif talebi bulunmuyor.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Detay Modal -->
+<div class="modal fade" id="detailModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Teklif Detayı</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- JavaScript ile doldurulacak -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'dashboard/js/jquery.min.js' %}"></script>
+<script>
+$(document).ready(function() {
+    // CSRF token ayarı
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    const csrftoken = getCookie('csrftoken');
+
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+
+    // Teklif detayını görüntüleme
+    $(document).on('click', '.btn-view', function() {
+        const id = $(this).data('id');
+        $.get(`/panel/teklif/${id}/`, function(data) {
+            $('#detailModal .modal-body').html(`
+                <p><strong>Ad Soyad:</strong> ${data.ad_soyad}</p>
+                <p><strong>Email:</strong> ${data.email}</p>
+                <p><strong>Telefon:</strong> ${data.telefon}</p>
+                <p><strong>Konu:</strong> ${data.konu}</p>
+                <p><strong>Mesaj:</strong> ${data.mesaj}</p>
+                <p><strong>Tarih:</strong> ${data.tarih}</p>
+            `);
+            $('#detailModal').modal('show');
+        }).fail(function(jqXHR) {
+            alert('Teklif detayları yüklenirken bir hata oluştu.');
+            console.error('Hata:', jqXHR.responseText);
+        });
+    });
+
+    // Okundu olarak işaretleme
+    $(document).on('click', '.btn-read', function() {
+        const id = $(this).data('id');
+        const row = $(this).closest('tr');
+        $.get(`/panel/teklif/okundu/${id}/`, function(data) {
+            if (data.status === 'success') {
+                row.removeClass('table-warning');
+                row.find('.btn-read').prop('disabled', true);
+            }
+        }).fail(function() {
+            alert('İşlem sırasında bir hata oluştu.');
+        });
+    });
+
+    // Teklif silme
+    $(document).on('click', '.btn-delete', function() {
+        if (!confirm('Bu teklifi silmek istediğinizden emin misiniz?')) return;
+        
+        const id = $(this).data('id');
+        const row = $(this).closest('tr');
+        $.get(`/panel/teklif/sil/${id}/`, function(data) {
+            if (data.status === 'success') {
+                row.fadeOut(400, function() {
+                    $(this).remove();
+                });
+            }
+        }).fail(function() {
+            alert('Silme işlemi sırasında bir hata oluştu.');
+        });
+    });
+
+    // Toplu işlemler
+    $('#selectAll').change(function() {
+        $('.teklif-checkbox').prop('checked', $(this).prop('checked'));
+        updateBulkButtons();
+    });
+
+    $(document).on('change', '.teklif-checkbox', function() {
+        updateBulkButtons();
+    });
+
+    function updateBulkButtons() {
+        const hasChecked = $('.teklif-checkbox:checked').length > 0;
+        $('#bulkReadBtn, #bulkDeleteBtn').prop('disabled', !hasChecked);
+    }
+
+    // Toplu okundu işaretleme
+    $('#bulkReadBtn').click(function() {
+        const selectedIds = $('.teklif-checkbox:checked').map(function() {
+            return $(this).val();
+        }).get();
+
+        $.ajax({
+            url: '/panel/teklif/toplu-okundu/',
+            type: 'POST',
+            data: { teklifler: selectedIds },
+            success: function(data) {
+                if (data.status === 'success') {
+                    $('.teklif-checkbox:checked').each(function() {
+                        $(this).closest('tr').removeClass('table-warning');
+                        $(this).closest('tr').find('.btn-read').prop('disabled', true);
+                    });
+                    $('#selectAll').prop('checked', false);
+                    updateBulkButtons();
+                }
+            },
+            error: function() {
+                alert('Toplu işaretleme sırasında bir hata oluştu.');
+            }
+        });
+    });
+
+    // Toplu silme
+    $('#bulkDeleteBtn').click(function() {
+        if (!confirm('Seçili teklifleri silmek istediğinizden emin misiniz?')) return;
+
+        const selectedIds = $('.teklif-checkbox:checked').map(function() {
+            return $(this).val();
+        }).get();
+
+        $.ajax({
+            url: '/panel/teklif/toplu-sil/',
+            type: 'POST',
+            data: { teklifler: selectedIds },
+            success: function(data) {
+                if (data.status === 'success') {
+                    $('.teklif-checkbox:checked').closest('tr').fadeOut(400, function() {
+                        $(this).remove();
+                    });
+                    $('#selectAll').prop('checked', false);
+                    updateBulkButtons();
+                }
+            },
+            error: function() {
+                alert('Toplu silme sırasında bir hata oluştu.');
+            }
+        });
+    });
+});
+</script>
+{% endblock %} 

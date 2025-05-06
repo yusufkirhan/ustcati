@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Hero Section -->
+<div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+    <!-- Göstergeler -->
+    <div class="carousel-indicators">
+        {% for hero in hero_sections %}
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active"{% endif %}></button>
+        {% endfor %}
+    </div>
+
+    <!-- Slider içeriği -->
+    <div class="carousel-inner">
+        {% for hero in hero_sections %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <div class="hero-section" style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{{ hero.background_image.url }}') no-repeat center center / cover;">
+                    <div class="container">
+                        <div class="hero-content">
+                            <span class="welcome-text">{{ hero.welcome_text }}</span>
+                            <h1 class="hero-title">{{ hero.title }}</h1>
+                            <div class="words-rotate">
+                                {% for word in hero.get_rotating_words_list %}
+                                    <span>{{ word }}</span>
+                                {% endfor %}
+                            </div>
+                            <p class="hero-description">{{ hero.description }}</p>
+                            <a href="#" class="hero-button" data-bs-toggle="modal" data-bs-target="#teklifModal">
+                                {{ hero.button_text }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Kontrol butonları -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Önceki</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Sonraki</span>
+    </button>
+</div>
+
+<!-- Blog Section -->
+<section class="post-cards">
+    <div class="container">
+        <h2 class="text-center">{{ site_ayarlari.blog_section_title }}</h2>
+        <p class="text-center section-description">{{ site_ayarlari.blog_section_description }}</p>
+        <div class="row g-4">
+            {% for post in blog_posts %}
+                <div class="col-md-4">
+                    <div class="post-card">
+                        <div class="post-image">
+                            <img src="{{ post.image.url }}" alt="{{ post.title }}">
+                        </div>
+                        <div class="post-content">
+                            <h3>{{ post.title }}</h3>
+                            <p>{{ post.content|truncatewords:20 }}</p>
+                            <a href="/blog/{{ post.id }}/" class="read-more">Devamını Oku</a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12 text-center">
+                    <p>Henüz blog yazısı eklenmemiş.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.hero-section {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+.hero-content {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.welcome-text {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.hero-title {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+}
+
+.words-rotate {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.hero-description {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.hero-button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    transition: background-color 0.3s;
+}
+
+.hero-button:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+.carousel-item {
+    transition: transform .6s ease-in-out;
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Carousel'i başlat
+    var carousel = new bootstrap.Carousel(document.getElementById('heroCarousel'), {
+        interval: 5000, // 5 saniyede bir geçiş yap
+        wrap: true // Sondan başa dön
+    });
+});
+</script>
+{% endblock %} 
